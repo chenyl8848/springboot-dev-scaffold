@@ -1,23 +1,50 @@
-# Compiled class file
+#Intellij idea&eclipse ignore
+.idea/
+/idea/
+*.ipr
+*.iml
+*.iws
+bin/
+*velocity.log*
+.classpath
+.project
+.settings/
+
+#java
 *.class
+*.lock
 
-# Log file
-*.log
+## sts ##
+.apt-generated
+.factorypath
+.springBeans
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
+#package file
 *.war
-*.nar
 *.ear
 *.zip
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+#maven ignore
+target/
+build/
+
+#Log file
+*.log 
+
+#BlueJ files
+*.ctxt
+
+#Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# temp file
+*.cache
+*.diff
+*.patch
+*.tmp
+
+# system ignore
+.DS_Store
+Thumbs.db
