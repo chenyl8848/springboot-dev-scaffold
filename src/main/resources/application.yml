@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: dev-scaffold
+  profiles:
+    active: dev
+
+server:
+  port: 8080
