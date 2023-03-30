@@ -18,7 +18,8 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <swagger.version>2.7.0</swagger.version>
-        <swagger-ui.version>1.9.6</swagger-ui.version>
+        <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
+        <springfox-swagger-ui.version>2.7.0</springfox-swagger-ui.version>
         <druid.version>1.2.15</druid.version>
         <mybaits-plus.version>3.5.2</mybaits-plus.version>
     </properties>
@@ -60,7 +61,13 @@
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
-            <version>${swagger-ui.version}</version>
+            <version>${swagger-bootstrap-ui.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger-ui.version}</version>
         </dependency>
     </dependencies>
 
