@@ -2,6 +2,7 @@ package com.codechen.scaffold.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,11 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = "测试接口")
 @RestController
+@Slf4j
 public class TestController {
 
     @ApiOperation(value = "接口测试")
     @GetMapping("/test")
     public String test() {
-        return "test";
+        log.info("测试接口...........");
+        log.error("报错接口...........");
+
+        throw new IllegalArgumentException("参数错误");
+//        return "test";
     }
 }

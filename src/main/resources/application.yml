@@ -6,3 +6,10 @@ spring:
 
 server:
   port: 8080
+
+logging:
+
+  file:
+    path: E:/logs/hello/
+    max-size: 20MB
+    max-history: 30
