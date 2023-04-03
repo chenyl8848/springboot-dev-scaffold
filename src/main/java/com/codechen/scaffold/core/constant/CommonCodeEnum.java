@@ -20,6 +20,8 @@ public enum CommonCodeEnum {
     ENABLE("0", "启用"),
     DISABLE("1", "禁用"),
 
+    TRACE_ID("TRACE_ID", "日志追踪ID"),
+
     ;
 
     /** 编码 */
