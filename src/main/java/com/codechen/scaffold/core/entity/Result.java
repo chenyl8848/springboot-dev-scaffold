@@ -44,6 +44,10 @@ public class Result<T> {
         return result;
     }
 
+    public static <T> Result<T> fail(Integer code, String message) {
+        return fail(code, message, null);
+    }
+
     public static <T> Result<T> fail(String message, T data) {
         return fail(ResultCodeEnum.FAIL.getCode(), message, data);
     }

@@ -16,6 +16,7 @@ public enum ResultCodeEnum {
 
     SUCCESS(200, "操作成功"),
     FAIL(500, "服务器出现异常"),
+    VALID_PARAMS_ERROR(1000, "校验参数错误"),
 
     ;
 
