@@ -17,11 +17,12 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <swagger.version>2.7.0</swagger.version>
+        <swagger.version>2.9.2</swagger.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
         <springfox-swagger-ui.version>2.7.0</springfox-swagger-ui.version>
         <druid.version>1.2.15</druid.version>
         <mybaits-plus.version>3.5.2</mybaits-plus.version>
+        <mybaits-plus-ui.version>2.0.1</mybaits-plus-ui.version>
     </properties>
 
     <dependencies>
@@ -58,6 +59,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.davidfantasy</groupId>
+            <artifactId>mybatis-plus-generator-ui</artifactId>
+            <version>${mybaits-plus-ui.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
@@ -68,12 +76,14 @@
             <version>${swagger.version}</version>
         </dependency>
 
+        <!-- ip:port/doc.html 的 swagger ui -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>${swagger-bootstrap-ui.version}</version>
         </dependency>
 
+        <!-- ip:port/swagger-ui.html 的 swagger ui -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
@@ -83,6 +93,11 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
     </dependencies>
 
