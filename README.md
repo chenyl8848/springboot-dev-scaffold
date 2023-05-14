@@ -148,6 +148,10 @@ public class MyBatisPlusConfig {
 
 ## 日志处理
 
+## 集成 `Redis`
+
+## 集成 `Spring Cache`
+
 ## 分布式锁
 
 ## 集成 `POI`

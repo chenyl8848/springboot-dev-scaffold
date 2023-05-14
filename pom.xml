@@ -23,6 +23,18 @@
         <druid.version>1.2.15</druid.version>
         <mybaits-plus.version>3.5.2</mybaits-plus.version>
         <mybaits-plus-ui.version>2.0.1</mybaits-plus-ui.version>
+        <huttool.version>5.8.10</huttool.version>
+        <fastjson.version>1.2.83</fastjson.version>
+        <guava.version>31.1-jre</guava.version>
+        <documents4j-local.version>1.0.3</documents4j-local.version>
+        <documents4j-transformer-msoffice-word.version>1.0.3</documents4j-transformer-msoffice-word.version>
+        <itextpdf.version>5.5.11</itextpdf.version>
+        <itext-asian.version>5.2.0</itext-asian.version>
+        <bcpkix-jdk15on.version>1.70</bcpkix-jdk15on.version>
+        <poi.version>5.0.0</poi.version>
+        <poi-ooxml.version>5.0.0</poi-ooxml.version>
+        <ofdrw-converter.version>1.17.18</ofdrw-converter.version>
+        <java-jwt.version>3.12.0</java-jwt.version>
     </properties>
 
     <dependencies>
@@ -44,6 +56,26 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
         </dependency>
 
         <dependency>
@@ -103,6 +135,82 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${huttool.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
+        <!-- 使用 documents4j 操作 pdf 开始 -->
+        <!-- pdf文档生成 -->
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-local</artifactId>
+            <version>${documents4j-local.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-transformer-msoffice-word</artifactId>
+            <version>${documents4j-transformer-msoffice-word.version}</version>
+        </dependency>
+
+        <!-- itext对pdf文档操作 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>${itextpdf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-asian</artifactId>
+            <version>${itext-asian.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>${bcpkix-jdk15on.version}</version>
+        </dependency>
+        <!-- 使用 documents4j 操作 pdf 结束 -->
+
+        <!-- 使用 poi 操作 word 开始 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi-ooxml.version}</version>
+        </dependency>
+        <!-- 使用 poi 操作 word 结束 -->
+
+        <dependency>
+            <groupId>org.ofdrw</groupId>
+            <artifactId>ofdrw-converter</artifactId>
+            <version>${ofdrw-converter.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${java-jwt.version}</version>
         </dependency>
     </dependencies>
 

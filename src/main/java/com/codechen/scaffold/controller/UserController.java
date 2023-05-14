@@ -1,7 +1,7 @@
 package com.codechen.scaffold.controller;
 
 import com.codechen.scaffold.core.entity.Result;
-import com.codechen.scaffold.core.entity.UserEntity;
+import com.codechen.scaffold.entity.UserEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -13,19 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
  * @author cyl
  * @date 2023-03-22 16:34
- * @description 测试接口
+ * @description 用户管理接口
  */
-@Api(tags = "测试接口")
+@Api(tags = "用户管理接口")
 @RestController
 @Slf4j
 @Validated
-public class TestController {
+public class UserController {
 
     @ApiOperation(value = "接口测试")
     @GetMapping("/test")
