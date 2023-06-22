@@ -2,12 +2,12 @@ spring:
   datasource:
       primary:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/second_kill?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+        jdbc-url: jdbc:mysql://localhost:3306/community-group-buy?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
         username: root
         password: root
       slave:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/second_kill?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+        jdbc-url: jdbc:mysql://localhost:3306/second_kill?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
         username: root
         password: root
   redis:
@@ -20,3 +20,7 @@ logging:
     path: E:/logs/hello/
     max-history: 30
     max-size: 20MB
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
