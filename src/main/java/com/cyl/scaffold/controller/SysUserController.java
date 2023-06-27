@@ -6,10 +6,12 @@ import com.cyl.scaffold.core.entity.Result;
 import com.cyl.scaffold.entity.SysRole;
 import com.cyl.scaffold.entity.SysUser;
 import com.cyl.scaffold.service.ISysUserService;
+import com.cyl.scaffold.vo.LoginUserVo;
 import com.cyl.scaffold.vo.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +35,22 @@ public class SysUserController {
 
     @Resource
     private ISysUserService sysUserService;
+
+    @ApiOperation(value = "登录")
+    @PostMapping("/login")
+    public Result login(@Validated @RequestBody LoginUserVo loginUserVo) {
+        String token = sysUserService.login(loginUserVo);
+        return Result.success(token);
+    }
+
+    @ApiOperation(value = "获取用户信息")
+    @GetMapping("/info")
+    public Result getUserInfo() {
+
+        SysUser sysUser = sysUserService.getUserInfo();
+
+        return Result.success(sysUser);
+    }
 
     @ApiOperation(value = "新增用户")
     @PostMapping("/add")
@@ -71,7 +89,7 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "用户列表")
-    @PostMapping("pageList/{pageNo}/{pageSize}")
+    @PostMapping("/pageList/{pageNo}/{pageSize}")
     public Result list(@PathVariable(value = "pageNo") Long pageNo,
                        @PathVariable(value = "pageSize") Long pageSize,
                        @RequestBody SysUserQueryVo sysUserQueryVo) {

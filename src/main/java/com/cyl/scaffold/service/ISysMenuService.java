@@ -35,4 +35,18 @@ public interface ISysMenuService extends IService<SysMenu> {
      */
     public List<SysMenu> menuTree();
 
+    /**
+     * 获取有权限的菜单信息
+     * @param menuList
+     * @return
+     */
+    public List<SysMenu> getPermissionMenus(List<SysMenu> menuList);
+
+    /**
+     * 获取有权限的按钮信息
+     * @param menuList
+     * @return
+     */
+    public List<String> getPermissionButtons(List<SysMenu> menuList);
+
 }

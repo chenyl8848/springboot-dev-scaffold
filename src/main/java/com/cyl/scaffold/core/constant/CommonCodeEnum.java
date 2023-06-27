@@ -22,6 +22,8 @@ public enum CommonCodeEnum {
 
     TRACE_ID("TRACE_ID", "日志追踪ID"),
 
+    THREAD_LOCAL_LOGIN_USER_KEY("user", "登录用户key")
+
     ;
 
     /** 编码 */

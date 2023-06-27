@@ -53,7 +53,9 @@ public abstract class AbstractEntity {
     private Integer isDeleted;
 
     /** 乐观锁 */
+    @ApiModelProperty(value = "版本号")
     @Version
+    @TableField(value = "version", fill = FieldFill.INSERT)
     private Integer version;
 
 }

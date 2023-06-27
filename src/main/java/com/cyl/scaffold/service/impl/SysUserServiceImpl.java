@@ -5,23 +5,33 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cyl.scaffold.constant.GlobalConstant;
+import com.cyl.scaffold.core.constant.CommonCodeEnum;
 import com.cyl.scaffold.core.constant.ResultCodeEnum;
 import com.cyl.scaffold.core.exception.BusinessException;
+import com.cyl.scaffold.core.util.JwtUtil;
+import com.cyl.scaffold.core.util.ThreadLocalUtil;
+import com.cyl.scaffold.entity.SysMenu;
 import com.cyl.scaffold.entity.SysRole;
 import com.cyl.scaffold.entity.SysUser;
 import com.cyl.scaffold.entity.SysUserRole;
 import com.cyl.scaffold.mapper.SysUserMapper;
+import com.cyl.scaffold.service.ISysMenuService;
 import com.cyl.scaffold.service.ISysRoleService;
 import com.cyl.scaffold.service.ISysUserRoleService;
 import com.cyl.scaffold.service.ISysUserService;
+import com.cyl.scaffold.vo.LoginUserVo;
 import com.cyl.scaffold.vo.SysUserQueryVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -38,6 +48,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private ISysRoleService sysRoleService;
+
+    @Autowired
+    private ISysMenuService sysMenuService;
+
+    @Value("${platform.config.auth.tokenSignSecret}")
+    private String tokenSignSecret;
+
+    @Value("${platform.config.auth.tokenExpiredTime}")
+    private Long tokenExpiredTime;
 
     @Override
     public void addUser(SysUser sysUser) {
@@ -130,6 +149,65 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         } else {
             return new ArrayList<SysRole>();
         }
+    }
+
+    @Override
+    public List<SysMenu> getAssignedMenu(Long userId) {
+        List<Long> roleIds = getAssignedUserRole(userId).stream()
+                .map(SysRole::getId)
+                .collect(Collectors.toList());
+
+        List<SysMenu> sysMenus = sysRoleService.getAssignedMenu(roleIds);
+
+        return sysMenus;
+    }
+
+    @Override
+    public String login(LoginUserVo loginUserVo) {
+        SysUser sysUser = getOne(new LambdaQueryWrapper<SysUser>()
+                .eq(SysUser::getUsername, loginUserVo.getUsername())
+                .eq(SysUser::getPassword, loginUserVo.getPassword()));
+        if (Objects.isNull(sysUser)) {
+            throw new BusinessException(ResultCodeEnum.SYS_USER_USERNAME_NOT_EXISTS_OR_PASSWORD_ERROR);
+        }
+
+        Map<String,Object> info = new HashMap<>();
+        info.put("username", sysUser.getUsername());
+        String token = JwtUtil.generateToken(sysUser.getUsername(), info, tokenSignSecret, tokenExpiredTime);
+
+        return token;
+    }
+
+    @Override
+    public SysUser getUserInfo() {
+        String username = ThreadLocalUtil.get(CommonCodeEnum.THREAD_LOCAL_LOGIN_USER_KEY.getCode());
+        if (StringUtils.isBlank(username)) {
+            throw new BusinessException(ResultCodeEnum.SYS_USER_USERNAME_IS_NULL);
+        }
+
+        SysUser sysUser = getUserByUsername(username);
+        if (Objects.isNull(sysUser)) {
+            throw new BusinessException(ResultCodeEnum.SYS_USER_NOT_EXISTS);
+        }
+        List<SysRole> sysRoles = new ArrayList<>();
+        List<SysMenu> sysMenus = new ArrayList<>();
+
+        if (username.equals(GlobalConstant.ADMIN_USER_NAME)) {
+            sysRoles = sysRoleService.list();
+            sysMenus = sysMenuService.list();
+        } else {
+            sysRoles = getAssignedUserRole(sysUser.getId());
+            sysMenus = getAssignedMenu(sysUser.getId());
+        }
+
+        List<SysMenu> permissionMenus = sysMenuService.getPermissionMenus(sysMenus);
+        List<String> permissionButtons = sysMenuService.getPermissionButtons(sysMenus);
+
+        sysUser.setRoles(sysRoles);
+        sysUser.setMenus(permissionMenus);
+        sysUser.setButtons(permissionButtons);
+
+        return sysUser;
     }
 
     /**

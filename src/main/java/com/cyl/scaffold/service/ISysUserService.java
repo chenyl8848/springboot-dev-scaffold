@@ -3,10 +3,11 @@ package com.cyl.scaffold.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cyl.scaffold.entity.SysMenu;
 import com.cyl.scaffold.entity.SysRole;
 import com.cyl.scaffold.entity.SysUser;
+import com.cyl.scaffold.vo.LoginUserVo;
 import com.cyl.scaffold.vo.SysUserQueryVo;
-
 
 import java.util.List;
 
@@ -66,8 +67,33 @@ public interface ISysUserService extends IService<SysUser> {
 
     /**
      * 根据用户id获取已分配的角色
+     *
      * @param userId
      * @return
      */
     List<SysRole> getAssignedUserRole(Long userId);
+
+    /**
+     * 根据用户id获取已分配的菜单
+     *
+     * @param userId
+     * @return
+     */
+    List<SysMenu> getAssignedMenu(Long userId);
+
+    /**
+     * 用户登录
+     *
+     * @param loginUserVo
+     * @return
+     */
+    public String login(LoginUserVo loginUserVo);
+
+    /**
+     * 获取用户信息
+     *
+     * @return
+     */
+    public SysUser getUserInfo();
+
 }

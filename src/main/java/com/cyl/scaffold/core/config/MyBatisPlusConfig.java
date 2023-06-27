@@ -9,6 +9,7 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  */
 @Configuration
 @MapperScan(basePackages = {"com.cyl.scaffold.mapper"})
+@EnableTransactionManagement
 public class MyBatisPlusConfig {
 
     /**
@@ -50,7 +52,9 @@ public class MyBatisPlusConfig {
             public void insertFill(MetaObject metaObject) {
                 this.setFieldValByName("createTime", LocalDateTime.now(), metaObject);
                 this.setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
+                // todo
                 this.setFieldValByName("isDeleted", 0, metaObject);
+                this.setFieldValByName("version", 1, metaObject);
             }
 
             @Override

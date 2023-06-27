@@ -19,6 +19,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(jwtInterceptor).addPathPatterns("/*");
+        registry.addInterceptor(jwtInterceptor).addPathPatterns("/**");
     }
 }

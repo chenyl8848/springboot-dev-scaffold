@@ -117,12 +117,29 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
 
         List<SysRoleMenu> sysRoleMenuList = sysRoleMenuService.list(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getRoleId, id));
-        List<Long> menuIds = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
+
+        List<Long> menuIds = sysRoleMenuList.stream()
+                .map(SysRoleMenu::getMenuId)
+                .collect(Collectors.toList());
         if (menuIds != null && menuIds.size() > 0) {
             return sysMenuService.list(new LambdaQueryWrapper<SysMenu>().in(SysMenu::getId, menuIds));
         } else {
             return new ArrayList<SysMenu>();
         }
 
+    }
+
+    @Override
+    public List<SysMenu> getAssignedMenu(List<Long> ids) {
+        List<SysRoleMenu> sysRoleMenuList = sysRoleMenuService.list(new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getRoleId, ids));
+
+        List<Long> menuIds = sysRoleMenuList.stream()
+                .map(SysRoleMenu::getMenuId)
+                .collect(Collectors.toList());
+        if (menuIds != null && menuIds.size() > 0) {
+            return sysMenuService.list(new LambdaQueryWrapper<SysMenu>().in(SysMenu::getId, menuIds));
+        } else {
+            return new ArrayList<SysMenu>();
+        }
     }
 }

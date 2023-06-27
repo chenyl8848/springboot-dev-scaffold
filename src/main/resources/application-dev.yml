@@ -24,3 +24,11 @@ logging:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+platform:
+  config:
+    auth:
+      tokenKey: "apiToken"
+      tokenSignSecret: "拳打南山敬老院，脚踢北海幼儿园"
+      tokenExpiredTime: 3600000
+      excludeUrls: "/sysuser/login,/error,/doc.html,/webjars/**,/swagger-resources,/v3/**"

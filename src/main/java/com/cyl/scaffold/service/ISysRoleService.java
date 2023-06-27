@@ -61,4 +61,11 @@ public interface ISysRoleService extends IService<SysRole> {
      * @return
      */
     List<SysMenu> getAssignedMenu(Long id);
+
+    /**
+     * 获取已分配菜单
+     * @param ids 角色id集合
+     * @return
+     */
+    List<SysMenu> getAssignedMenu(List<Long> ids);
 }

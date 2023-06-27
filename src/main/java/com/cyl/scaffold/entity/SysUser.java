@@ -9,6 +9,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 /**
  * @author cyl
@@ -43,7 +44,15 @@ public class SysUser extends AbstractEntity {
     @TableField("ware_id")
     private Long wareId;
 
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty(value = "角色信息")
     @TableField(exist = false)
-    private String roleName;
+    private List<SysRole> roles;
+
+    @ApiModelProperty(value = "菜单信息")
+    @TableField(exist = false)
+    private List<SysMenu> menus;
+
+    @ApiModelProperty(value = "按钮信息")
+    @TableField(exist = false)
+    private List<String> buttons;
 }

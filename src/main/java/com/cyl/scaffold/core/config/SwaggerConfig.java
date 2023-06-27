@@ -1,6 +1,7 @@
 package com.cyl.scaffold.core.config;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -26,6 +27,9 @@ import java.util.ArrayList;
 @EnableSwagger2
 @EnableKnife4j
 public class SwaggerConfig {
+
+    @Value("${platform.config.auth.tokenKey}")
+    private String tokenKey;
 
     /**
      * 文档信息
@@ -56,7 +60,7 @@ public class SwaggerConfig {
 
         RequestParameterBuilder requestParameterBuilder = new RequestParameterBuilder();
 
-        RequestParameter requestParameter = requestParameterBuilder.name("apiToken")
+        RequestParameter requestParameter = requestParameterBuilder.name(tokenKey)
                 .description("用户token")
                 .in("header")
                 .required(false)

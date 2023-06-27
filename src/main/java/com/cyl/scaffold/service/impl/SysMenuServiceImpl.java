@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cyl.scaffold.constant.GlobalConstant;
 import com.cyl.scaffold.core.constant.ResultCodeEnum;
 import com.cyl.scaffold.core.exception.BusinessException;
 import com.cyl.scaffold.entity.SysMenu;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author cyl
@@ -68,10 +70,34 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         return getMenuTree(list);
     }
 
+    @Override
+    public List<SysMenu> getPermissionMenus(List<SysMenu> menuList) {
+        List<SysMenu> permissionMenus = menuList.stream()
+                .filter(item -> item.getType().equals(GlobalConstant.MENU))
+                .collect(Collectors.toList());
+
+        permissionMenus = getMenuTree(permissionMenus);
+
+//        return permissionMenus;
+        return permissionMenus.get(0).getChildren();
+    }
+
+    @Override
+    public List<String> getPermissionButtons(List<SysMenu> menuList) {
+
+        List<String> permissionButtons = menuList.stream()
+                .filter(item -> item.getType().equals(GlobalConstant.BUTTON))
+                .map(SysMenu::getMenuCode)
+                .collect(Collectors.toList());
+
+        return permissionButtons;
+    }
+
     private List<SysMenu> getMenuTree(List<SysMenu> list) {
         ArrayList<SysMenu> resultList = new ArrayList<>();
+        List<Long> ids = list.stream().map(SysMenu::getId).collect(Collectors.toList());
         for (SysMenu sysMenu : list) {
-            if (sysMenu.getPid() == 0) {
+            if (!ids.contains(sysMenu.getPid())) {
                 resultList.add(sysMenu);
             }
         }

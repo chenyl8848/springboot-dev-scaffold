@@ -25,18 +25,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public Result handleException(Exception exception) {
+        exception.printStackTrace();
         logger.error(exception.getMessage());
         return Result.fail(exception.getMessage());
     }
 
     @ExceptionHandler(value = BusinessException.class)
     public Result handleBusinessException(BusinessException exception) {
+        exception.printStackTrace();
         logger.error(exception.getMessage());
         return Result.fail(exception.getCode(), exception.getMessage());
     }
 
     @ExceptionHandler(value = GlobalException.class)
     public Result handleGlobalException(GlobalException exception) {
+        exception.printStackTrace();
         logger.error(exception.getMessage());
         return Result.fail(exception.getCode(), exception.getMessage(), null);
     }
@@ -51,6 +54,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = BindException.class)
     public Result handleBindException(BindException exception) {
+        exception.printStackTrace();
         logger.error(exception.getMessage());
         StringBuffer message = new StringBuffer();
         exception.getBindingResult()
@@ -63,6 +67,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Result handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+        exception.printStackTrace();
         logger.error(exception.getMessage());
         StringBuffer message = new StringBuffer();
         exception.getBindingResult()
@@ -75,6 +80,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = ConstraintViolationException.class)
     public Result handleConstraintViolationException(ConstraintViolationException exception) {
+        exception.printStackTrace();
         logger.error(exception.getMessage());
         StringBuffer message = new StringBuffer();
         exception.getConstraintViolations()
