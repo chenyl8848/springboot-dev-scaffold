@@ -194,7 +194,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         if (username.equals(GlobalConstant.ADMIN_USER_NAME)) {
             sysRoles = sysRoleService.list();
-            sysMenus = sysMenuService.list();
+            sysMenus = sysMenuService.list(new LambdaQueryWrapper<SysMenu>().orderByAsc(SysMenu::getSort));
         } else {
             sysRoles = getAssignedUserRole(sysUser.getId());
             sysMenus = getAssignedMenu(sysUser.getId());

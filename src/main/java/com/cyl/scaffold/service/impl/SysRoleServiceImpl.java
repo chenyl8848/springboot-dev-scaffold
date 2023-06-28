@@ -137,7 +137,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 .map(SysRoleMenu::getMenuId)
                 .collect(Collectors.toList());
         if (menuIds != null && menuIds.size() > 0) {
-            return sysMenuService.list(new LambdaQueryWrapper<SysMenu>().in(SysMenu::getId, menuIds));
+            return sysMenuService.list(new LambdaQueryWrapper<SysMenu>().in(SysMenu::getId, menuIds).orderByAsc(SysMenu::getSort));
         } else {
             return new ArrayList<SysMenu>();
         }

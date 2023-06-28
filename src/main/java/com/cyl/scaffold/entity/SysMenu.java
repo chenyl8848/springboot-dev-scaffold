@@ -40,6 +40,10 @@ public class SysMenu extends AbstractEntity {
 	@TableField("menu_icon")
 	private String menuIcon;
 
+	@ApiModelProperty(value = "组件路径")
+	@TableField("component")
+	private String component;
+
 	@ApiModelProperty(value = "跳转页面路径")
 	@TableField("path")
 	private String path;
