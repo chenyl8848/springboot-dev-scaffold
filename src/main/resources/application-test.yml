@@ -1,0 +1,34 @@
+spring:
+  datasource:
+      primary:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://47.106.166.2:3306/test?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+        username: cyl
+        password: Cyl@980808
+      slave:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://47.106.166.2:3306/test?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+        username: cyl
+        password: Cyl@980808
+  redis:
+    host: localhost
+    port: 6379
+    password: 123456
+
+logging:
+  file:
+    path: E:/logs/hello/
+    max-history: 30
+    max-size: 20MB
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+platform:
+  config:
+    auth:
+      tokenKey: "apiToken"
+      tokenSignSecret: "拳打南山敬老院，脚踢北海幼儿园"
+      tokenExpiredTime: 3600000
+      excludeUrls: "/sysuser/login,/error,/doc.html,/webjars/**,/swagger-resources,/v3/**"
