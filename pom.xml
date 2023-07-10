@@ -37,6 +37,7 @@
         <ofdrw-converter.version>1.17.18</ofdrw-converter.version>
         <java-jwt.version>3.12.0</java-jwt.version>
         <tianai-captcha.version>1.4.1</tianai-captcha.version>
+        <ip2region.version>2.6.5</ip2region.version>
     </properties>
 
     <dependencies>
@@ -225,6 +226,12 @@
             <groupId>cloud.tianai.captcha</groupId>
             <artifactId>tianai-captcha-springboot-starter</artifactId>
             <version>${tianai-captcha.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+            <version>${ip2region.version}</version>
         </dependency>
     </dependencies>
 

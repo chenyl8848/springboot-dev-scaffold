@@ -28,7 +28,6 @@ import java.util.Set;
  */
 public class WordUtil {
 
-
     /**
      * 根据模板生成新word文档
      * 判断表格是需要替换还是需要插入，判断逻辑有$为替换，表格无$为插入
