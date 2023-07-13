@@ -22,9 +22,10 @@ public class IpUtilTest {
      */
     @Test
     public void testGetIpRegion() {
-//        String ip = "47.106.166.2";
-//        String ip = "164.114.53.60";
-        String ip = "47.52.236.180";
+        String ip = "220.248.12.158"; // IpRegion:上海
+//        String ip = "47.52.236.180"; // IpRegion:香港
+//        String ip = "172.22.12.123"; // IpRegion:内网IP
+//        String ip = "164.114.53.60"; // IpRegion:美国
         String ipRegion = IpUtil.getIpRegion(ip);
         LOGGER.info("IpRegion:{}", ipRegion);
     }

@@ -11,6 +11,8 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author cyl
@@ -113,6 +115,18 @@ public class IpUtil {
         return stringBuilder.toString().trim().toUpperCase();
     }
 
+
+    /**
+     * 判断是否为合法 IP
+     * @return
+     */
+    public static boolean checkIp(String ipAddress) {
+        String ip = "([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}";
+        Pattern pattern = Pattern.compile(ip);
+        Matcher matcher = pattern.matcher(ipAddress);
+        return matcher.matches();
+    }
+
     /**
      * 在服务启动时，将 ip2region 加载到内存中
      */
@@ -134,44 +148,48 @@ public class IpUtil {
      * @return
      */
     public static String getIpRegion(String ip) {
-        initIp2Region();
 
-        try {
-            HashMap<String, String> cityInfo = new HashMap<>();
-            String searchIpInfo = searcher.search(ip);
-            // searchIpInfo 的数据格式： 国家|区域|省份|城市|ISP
-            // 192.168.31.160 0|0|0|内网IP|内网IP
-            // 47.52.236.180 中国|0|香港|0|阿里云
-            // 220.248.12.158 中国|0|上海|上海市|联通
-            // 164.114.53.60 美国|0|华盛顿|0|0
+        boolean isIp = checkIp(ip);
 
-            String[] splitIpInfo = searchIpInfo.split("\\|");
-            cityInfo.put("ip", ip);
-            cityInfo.put("searchInfo", searchIpInfo);
-            cityInfo.put("country", splitIpInfo[0]);
-            cityInfo.put("region", splitIpInfo[1]);
-            cityInfo.put("province", splitIpInfo[2]);
-            cityInfo.put("city", splitIpInfo[3]);
-            cityInfo.put("ISP", splitIpInfo[3]);
+        if (isIp) {
 
-            //--------------国内属地返回省份--------------
-            if ("中国".equals(cityInfo.get("country"))) {
-                return cityInfo.get("province");
+            initIp2Region();
+
+            try {
+                String searchIpInfo = searcher.search(ip);
+                // searchIpInfo 的数据格式： 国家|区域|省份|城市|ISP
+                // 192.168.31.160 0|0|0|内网IP|内网IP
+                // 47.52.236.180 中国|0|香港|0|阿里云
+                // 220.248.12.158 中国|0|上海|上海市|联通
+                // 164.114.53.60 美国|0|华盛顿|0|0
+
+                String[] splitIpInfo = searchIpInfo.split("\\|");
+
+                if (splitIpInfo.length > 0) {
+                    if ("中国".equals(splitIpInfo[0])) {
+                        // 国内属地返回省份
+                        return splitIpInfo[2];
+                    } else if ("0".equals(splitIpInfo[0])) {
+                        if ("内网IP".equals(splitIpInfo[4])) {
+                            // 内网 IP
+                            return splitIpInfo[4];
+                        } else {
+                            return "";
+                        }
+                    } else {
+                        // 国外属地返回国家
+                        return splitIpInfo[0];
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            //------------------内网 IP----------------
-            if ("0".equals(cityInfo.get("country"))) {
-                if ("内网IP".equals(cityInfo.get("ISP"))) {
-                    return "";
-                } else return "";
-            } else {
-                //--------------国外属地返回国家--------------
-                return cityInfo.get("country");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            return "";
+        } else {
+            throw new IllegalArgumentException("非法的IP地址");
         }
-        return "";
+
     }
 
 }
