@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 
 import static com.cyl.scaffold.core.constant.ResultCodeEnum.VALID_PARAMS_ERROR;
@@ -24,23 +25,29 @@ public class GlobalExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(value = Exception.class)
-    public Result handleException(Exception exception) {
-        exception.printStackTrace();
+    public Result handleException(Exception exception, HttpServletRequest request) {
+        logger.error("请求地址【{}】==>请求方式【{}】", request.getRequestURI(), request.getMethod());
         logger.error(exception.getMessage());
+        exception.printStackTrace();
+
         return Result.fail(exception.getMessage());
     }
 
     @ExceptionHandler(value = BusinessException.class)
-    public Result handleBusinessException(BusinessException exception) {
-        exception.printStackTrace();
+    public Result handleBusinessException(BusinessException exception, HttpServletRequest request) {
+        logger.error("请求地址【{}】==>请求方式【{}】", request.getRequestURI(), request.getMethod());
         logger.error(exception.getMessage());
+        exception.printStackTrace();
+
         return Result.fail(exception.getCode(), exception.getMessage());
     }
 
     @ExceptionHandler(value = GlobalException.class)
-    public Result handleGlobalException(GlobalException exception) {
-        exception.printStackTrace();
+    public Result handleGlobalException(GlobalException exception, HttpServletRequest request) {
+        logger.error("请求地址【{}】==>请求方式【{}】", request.getRequestURI(), request.getMethod());
         logger.error(exception.getMessage());
+        exception.printStackTrace();
+
         return Result.fail(exception.getCode(), exception.getMessage(), null);
     }
 
@@ -53,9 +60,11 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = BindException.class)
-    public Result handleBindException(BindException exception) {
-        exception.printStackTrace();
+    public Result handleBindException(BindException exception, HttpServletRequest request) {
+        logger.error("请求地址【{}】==>请求方式【{}】", request.getRequestURI(), request.getMethod());
         logger.error(exception.getMessage());
+        exception.printStackTrace();
+
         StringBuffer message = new StringBuffer();
         exception.getBindingResult()
                 .getFieldErrors()
@@ -66,9 +75,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public Result handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-        exception.printStackTrace();
+    public Result handleMethodArgumentNotValidException(MethodArgumentNotValidException exception, HttpServletRequest request) {
+        logger.error("请求地址【{}】==>请求方式【{}】", request.getRequestURI(), request.getMethod());
         logger.error(exception.getMessage());
+        exception.printStackTrace();
+
         StringBuffer message = new StringBuffer();
         exception.getBindingResult()
                 .getFieldErrors()
@@ -79,9 +90,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public Result handleConstraintViolationException(ConstraintViolationException exception) {
+    public Result handleConstraintViolationException(ConstraintViolationException exception, HttpServletRequest request) {
+        logger.error("请求地址【{}】==>请求方式【{}】", request.getRequestURI(), request.getMethod());
         exception.printStackTrace();
         logger.error(exception.getMessage());
+
         StringBuffer message = new StringBuffer();
         exception.getConstraintViolations()
                 .stream()
