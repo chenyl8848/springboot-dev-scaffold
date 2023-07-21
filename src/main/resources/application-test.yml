@@ -2,14 +2,14 @@ spring:
   datasource:
       primary:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://47.106.166.2:3306/test?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
-        username: cyl
-        password: Cyl@980808
+        jdbc-url: jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+        username: root
+        password: root
       slave:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://47.106.166.2:3306/test?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
-        username: cyl
-        password: Cyl@980808
+        jdbc-url: jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+        username: root
+        password: root
   redis:
     host: localhost
     port: 6379
