@@ -11,7 +11,7 @@ spring:
         username: root
         password: root
   redis:
-    host: 47.106.166.2
+    host: localhost
     port: 6379
     password: "#e!pTa/qh6-h"
 
