@@ -5,7 +5,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.nio.charset.StandardCharsets;
 
@@ -14,7 +13,6 @@ import java.nio.charset.StandardCharsets;
  * @date 2023-04-23 11:20
  * @description MD5Util 测试类
  */
-@SpringBootTest
 public class MD5UtilTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MD5UtilTest.class);

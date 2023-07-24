@@ -4,7 +4,6 @@ import com.cyl.scaffold.core.util.IpUtil;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
 
 
 /**
@@ -12,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @date 2023-07-10 11:20
  * @description ip 工具类测试类
  */
-@SpringBootTest
 public class IpUtilTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IpUtilTest.class);

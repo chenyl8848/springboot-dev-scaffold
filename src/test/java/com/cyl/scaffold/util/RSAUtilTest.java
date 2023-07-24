@@ -4,7 +4,6 @@ import com.cyl.scaffold.core.util.RSAUtil;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -14,7 +13,6 @@ import java.util.Map;
  * @date 2023-04-23 10:45
  * @description RSAUtil 测试类
  */
-@SpringBootTest
 public class RSAUtilTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RSAUtilTest.class);
