@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  * @date 2023-05-11 15:59
  * @description 文件服务接口
  */
-public interface FileService {
+public interface IFileService {
 
     public void init();
 

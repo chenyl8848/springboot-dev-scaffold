@@ -26,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +60,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private Long tokenExpiredTime;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addUser(SysUser sysUser) {
         // 1.校验用户名
         checkUniqueUsername(sysUser.getUsername());
@@ -67,6 +69,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         checkUniquePhone(sysUser.getPhone());
 
         save(sysUser);
+
+        int i = 10 / 0;
+
     }
 
     @Override
@@ -171,7 +176,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new BusinessException(ResultCodeEnum.SYS_USER_USERNAME_NOT_EXISTS_OR_PASSWORD_ERROR);
         }
 
-        Map<String,Object> info = new HashMap<>();
+        Map<String, Object> info = new HashMap<>();
         info.put("username", sysUser.getUsername());
         String token = JwtUtil.generateToken(sysUser.getUsername(), info, tokenSignSecret, tokenExpiredTime);
 

@@ -14,7 +14,7 @@ public class MyBatisPlusGenerator {
     public static void main(String[] args) {
         GeneratorConfig generatorConfig = GeneratorConfig.builder()
                 // 数据库连接地址
-                .jdbcUrl("jdbc:mysql://localhost:3306/second_kill?serverTimezone=Asia/Shanghai&characterEncoding=utf-8")
+                .jdbcUrl("jdbc:mysql://localhost:3306/community-group-buy?serverTimezone=Asia/Shanghai&characterEncoding=utf-8")
                 // 数据库用户名
                 .userName("root")
                 // 数据库密码

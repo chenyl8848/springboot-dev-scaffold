@@ -1,6 +1,6 @@
 package com.cyl.scaffold.service.impl;
 
-import com.cyl.scaffold.service.FileService;
+import com.cyl.scaffold.service.IFileService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * @description 文件接口实现类
  */
 @Service
-public class FileServiceImpl implements FileService {
+public class IFileServiceImpl implements IFileService {
 
     private final Path path = Paths.get("E:\\file");
 

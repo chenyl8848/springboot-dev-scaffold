@@ -1,7 +1,7 @@
 package com.cyl.scaffold.controller;
 
 import com.cyl.scaffold.core.entity.Result;
-import com.cyl.scaffold.service.FileService;
+import com.cyl.scaffold.service.IFileService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -26,12 +26,12 @@ public class FileController {
     private final static String utf8 = "utf-8";
 
     @Autowired
-    private FileService fileService;
+    private IFileService IFileService;
 
     @PostMapping("/upload")
     public Result upload(@RequestParam("file") MultipartFile file) {
         try {
-            fileService.sava(file);
+            IFileService.sava(file);
             return Result.success("upload file successfully:" + file.getOriginalFilename());
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +57,7 @@ public class FileController {
 
     @GetMapping("files/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable("filename") String filename) {
-        Resource file = fileService.load(filename);
+        Resource file = IFileService.load(filename);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment;filename=\"" + file.getFilename() + "\"")

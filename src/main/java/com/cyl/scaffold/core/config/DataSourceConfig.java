@@ -4,6 +4,7 @@ import com.cyl.scaffold.core.constant.DataSourceTypeEnum;
 import com.cyl.scaffold.core.holder.DataSourceContextHolder;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -37,17 +38,14 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public AbstractRoutingDataSource routingDataSource() {
+    public AbstractRoutingDataSource routingDataSource(DataSource primaryDataSource, DataSource slaveDataSource) {
 
         LinkedHashMap<Object, Object> targetDataSources = Maps.newLinkedHashMap();
-        DataSource primaryDataSource = primaryDataSource();
-        DataSource slaveDataSource = slaveDataSource();
 
         targetDataSources.put(DataSourceTypeEnum.PRIMARY.name(), primaryDataSource);
         targetDataSources.put(DataSourceTypeEnum.SLAVE.name(), slaveDataSource);
 
         AbstractRoutingDataSource routingDataSource = new AbstractRoutingDataSource() {
-
             @Override
             protected Object determineCurrentLookupKey() {
                 String dataSourceType = DataSourceContextHolder.getDataSourceType();
@@ -66,8 +64,18 @@ public class DataSourceConfig {
      * 事务管理器
      * @return
      */
+    @Primary
     @Bean
-    public DataSourceTransactionManager dataSourceTransactionManager() {
-        return new DataSourceTransactionManager(routingDataSource());
+    public DataSourceTransactionManager dataSourceTransactionManager(@Qualifier("primaryDataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    /**
+     * 事务管理器
+     * @return
+     */
+    @Bean
+    public DataSourceTransactionManager slaveDataSourceTransactionManager(@Qualifier("slaveDataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 }
