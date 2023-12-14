@@ -62,7 +62,7 @@ public class SysMenu extends AbstractEntity {
 
 	@ApiModelProperty(value = "菜单顺序")
 	@TableField("sort")
-	private Integer sort;
+	private Integer sort = 0;
 
 	@ApiModelProperty(value = "是否外链(0:否,1:是)")
 	@TableField("is_external")

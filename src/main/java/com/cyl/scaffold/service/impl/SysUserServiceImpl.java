@@ -69,9 +69,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         checkUniquePhone(sysUser.getPhone());
 
         save(sysUser);
-
-        int i = 10 / 0;
-
     }
 
     @Override

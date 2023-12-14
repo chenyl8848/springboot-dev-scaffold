@@ -18,6 +18,7 @@ import com.cyl.scaffold.vo.SysRoleQueryVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +41,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     private ISysMenuService sysMenuService;
 
     @Override
+//    @Transactional(rollbackFor = Exception.class)
     public void addRole(SysRole sysRole) {
         // 校验角色编码是否已经存在
         checkUniqueRoleCode(sysRole.getRoleCode());
