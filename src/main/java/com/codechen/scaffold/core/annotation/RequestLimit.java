@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-07-13 16:35
  * @description 限流注解
  */

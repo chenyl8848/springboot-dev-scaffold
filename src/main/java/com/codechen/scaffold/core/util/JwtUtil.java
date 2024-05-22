@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-05-10 11:27
  * @description jwt token 工具类
  */

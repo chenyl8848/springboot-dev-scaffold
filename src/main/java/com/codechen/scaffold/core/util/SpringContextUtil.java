@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-04-06 17:30
  * @description SpringContext 上下文工具类
  */

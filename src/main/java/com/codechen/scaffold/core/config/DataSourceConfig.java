@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 import java.util.LinkedHashMap;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-04-28 11:36
  * @description 多数据源配置类
  */

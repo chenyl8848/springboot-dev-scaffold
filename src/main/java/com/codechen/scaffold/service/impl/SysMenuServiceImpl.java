@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.codechen.scaffold.constant.GlobalConstant;
+import com.codechen.scaffold.constant.CommonConstant;
 import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import com.codechen.scaffold.core.exception.BusinessException;
-import com.codechen.scaffold.entity.SysMenu;
+import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.mapper.SysMenuMapper;
 import com.codechen.scaffold.service.ISysMenuService;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 15:38
  * @description 系统菜单接口实现类
  */
@@ -73,7 +73,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<SysMenu> getPermissionMenus(List<SysMenu> menuList) {
         List<SysMenu> permissionMenus = menuList.stream()
-                .filter(item -> item.getType().equals(GlobalConstant.MENU))
+                .filter(item -> item.getType().equals(CommonConstant.MENU))
                 .collect(Collectors.toList());
 
         permissionMenus = getMenuTree(permissionMenus);
@@ -86,7 +86,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<String> getPermissionButtons(List<SysMenu> menuList) {
 
         List<String> permissionButtons = menuList.stream()
-                .filter(item -> item.getType().equals(GlobalConstant.BUTTON))
+                .filter(item -> item.getType().equals(CommonConstant.BUTTON))
                 .map(SysMenu::getMenuCode)
                 .collect(Collectors.toList());
 

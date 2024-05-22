@@ -3,11 +3,11 @@ package com.codechen.scaffold.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.core.entity.Result;
-import com.codechen.scaffold.entity.SysRole;
-import com.codechen.scaffold.entity.SysUser;
+import com.codechen.scaffold.domain.entity.SysRole;
+import com.codechen.scaffold.domain.entity.SysUser;
 import com.codechen.scaffold.service.ISysUserService;
-import com.codechen.scaffold.vo.LoginUserVo;
-import com.codechen.scaffold.vo.SysUserQueryVo;
+import com.codechen.scaffold.domain.vo.LoginUserVo;
+import com.codechen.scaffold.domain.vo.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 15:27
  * @description 用户管理
  */

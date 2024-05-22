@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-04-28 11:17
  * @description 多数据源类型
  */

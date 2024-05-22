@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.retry.annotation.EnableRetry;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-03-22 15:40
  * @description 脚手架主启动类
  */
@@ -15,9 +15,9 @@ import org.springframework.retry.annotation.EnableRetry;
 // 开启缓存
 @EnableCaching
 @SpringBootApplication
-public class DevScaffoldApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(DevScaffoldApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }

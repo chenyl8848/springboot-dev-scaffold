@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.time.LocalDateTime;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-03-22 16:07
  * @description MyBatisPlus 配置类
  */

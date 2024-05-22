@@ -15,7 +15,7 @@ import javax.validation.ConstraintViolationException;
 import static com.codechen.scaffold.core.constant.ResultCodeEnum.VALID_PARAMS_ERROR;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-03-28 17:14
  * @description 全局异常处理类
  */

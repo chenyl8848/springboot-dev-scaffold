@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-07-05 9:45
  * @description 验证码
  */

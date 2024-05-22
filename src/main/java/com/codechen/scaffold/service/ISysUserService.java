@@ -3,16 +3,16 @@ package com.codechen.scaffold.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.codechen.scaffold.entity.SysMenu;
-import com.codechen.scaffold.entity.SysRole;
-import com.codechen.scaffold.entity.SysUser;
-import com.codechen.scaffold.vo.LoginUserVo;
-import com.codechen.scaffold.vo.SysUserQueryVo;
+import com.codechen.scaffold.domain.entity.SysMenu;
+import com.codechen.scaffold.domain.entity.SysRole;
+import com.codechen.scaffold.domain.entity.SysUser;
+import com.codechen.scaffold.domain.vo.LoginUserVo;
+import com.codechen.scaffold.domain.vo.SysUserQueryVo;
 
 import java.util.List;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 15:36
  * @description 系统用户接口类
  */

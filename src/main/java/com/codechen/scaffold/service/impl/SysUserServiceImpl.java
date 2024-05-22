@@ -6,22 +6,22 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.codechen.scaffold.service.ISysUserRoleService;
-import com.codechen.scaffold.constant.GlobalConstant;
+import com.codechen.scaffold.constant.CommonConstant;
 import com.codechen.scaffold.core.constant.CommonCodeEnum;
 import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import com.codechen.scaffold.core.exception.BusinessException;
 import com.codechen.scaffold.core.util.JwtUtil;
 import com.codechen.scaffold.core.util.ThreadLocalUtil;
-import com.codechen.scaffold.entity.SysMenu;
-import com.codechen.scaffold.entity.SysRole;
-import com.codechen.scaffold.entity.SysUser;
-import com.codechen.scaffold.entity.SysUserRole;
+import com.codechen.scaffold.domain.entity.SysMenu;
+import com.codechen.scaffold.domain.entity.SysRole;
+import com.codechen.scaffold.domain.entity.SysUser;
+import com.codechen.scaffold.domain.entity.SysUserRole;
 import com.codechen.scaffold.mapper.SysUserMapper;
 import com.codechen.scaffold.service.ISysMenuService;
 import com.codechen.scaffold.service.ISysRoleService;
 import com.codechen.scaffold.service.ISysUserService;
-import com.codechen.scaffold.vo.LoginUserVo;
-import com.codechen.scaffold.vo.SysUserQueryVo;
+import com.codechen.scaffold.domain.vo.LoginUserVo;
+import com.codechen.scaffold.domain.vo.SysUserQueryVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +37,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 15:38
  * @description 系统用户接口实现类
  */
@@ -194,7 +194,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<SysRole> sysRoles = new ArrayList<>();
         List<SysMenu> sysMenus = new ArrayList<>();
 
-        if (username.equals(GlobalConstant.ADMIN_USER_NAME)) {
+        if (username.equals(CommonConstant.ADMIN_USER_NAME)) {
             sysRoles = sysRoleService.list();
             sysMenus = sysMenuService.list(new LambdaQueryWrapper<SysMenu>().orderByAsc(SysMenu::getSort));
         } else {

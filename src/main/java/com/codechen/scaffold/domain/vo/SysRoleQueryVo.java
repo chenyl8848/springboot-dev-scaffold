@@ -1,4 +1,4 @@
-package com.codechen.scaffold.vo;
+package com.codechen.scaffold.domain.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,7 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 17:12
  * @description 系统角色查询 vo
  */

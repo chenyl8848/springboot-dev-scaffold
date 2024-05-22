@@ -1,7 +1,7 @@
 package com.codechen.scaffold.core.util;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-03-31 14:28
  * @description 雪花 ID 工具类
  *  Twitter_Snowflake

@@ -1,11 +1,11 @@
 package com.codechen.scaffold.constant;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-26 11:34
  * @description 通用实体类
  */
-public class GlobalConstant {
+public class CommonConstant {
 
     /** 菜单 */
     public static final Integer MENU = 1;

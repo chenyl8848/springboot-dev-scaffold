@@ -18,7 +18,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-03-28 14:41
  * @description 通用抽象 entity
  */

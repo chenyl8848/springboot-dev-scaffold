@@ -7,7 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-04-06 17:29
  * @description MD5 加密工具类
  */

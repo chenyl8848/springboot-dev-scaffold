@@ -1,4 +1,4 @@
-package com.codechen.scaffold.entity;
+package com.codechen.scaffold.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 15:33
  * @description 系统用户
  */

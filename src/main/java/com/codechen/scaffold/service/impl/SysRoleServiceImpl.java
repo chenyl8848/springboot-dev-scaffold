@@ -7,14 +7,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import com.codechen.scaffold.core.exception.BusinessException;
-import com.codechen.scaffold.entity.SysMenu;
-import com.codechen.scaffold.entity.SysRole;
-import com.codechen.scaffold.entity.SysRoleMenu;
+import com.codechen.scaffold.domain.entity.SysMenu;
+import com.codechen.scaffold.domain.entity.SysRole;
+import com.codechen.scaffold.domain.entity.SysRoleMenu;
 import com.codechen.scaffold.mapper.SysRoleMapper;
 import com.codechen.scaffold.service.ISysMenuService;
 import com.codechen.scaffold.service.ISysRoleMenuService;
 import com.codechen.scaffold.service.ISysRoleService;
-import com.codechen.scaffold.vo.SysRoleQueryVo;
+import com.codechen.scaffold.domain.vo.SysRoleQueryVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 18:19
  * @description 系统角色接口实现类
  */

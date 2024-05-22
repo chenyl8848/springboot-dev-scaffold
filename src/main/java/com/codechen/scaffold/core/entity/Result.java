@@ -4,7 +4,7 @@ import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import lombok.Data;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-03-28 16:50
  * @description 全局返回
  */

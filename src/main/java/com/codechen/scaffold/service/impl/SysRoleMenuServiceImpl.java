@@ -4,13 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import com.codechen.scaffold.entity.SysRoleMenu;
+import com.codechen.scaffold.domain.entity.SysRoleMenu;
 import com.codechen.scaffold.mapper.SysRoleMenuMapper;
 import com.codechen.scaffold.service.ISysRoleMenuService;
 import org.springframework.stereotype.Service;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 18:19
  * @description 角色菜单接口实现类
  */

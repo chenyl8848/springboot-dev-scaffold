@@ -1,7 +1,7 @@
 package com.codechen.scaffold.controller;
 
 import com.codechen.scaffold.core.entity.Result;
-import com.codechen.scaffold.entity.SysMenu;
+import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.service.ISysMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 15:27
  * @description 菜单管理
  */

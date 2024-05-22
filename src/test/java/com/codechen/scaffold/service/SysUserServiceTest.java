@@ -1,6 +1,6 @@
 package com.codechen.scaffold.service;
 
-import com.codechen.scaffold.entity.SysUser;
+import com.codechen.scaffold.domain.entity.SysUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,11 +1,11 @@
-package com.codechen.scaffold.vo;
+package com.codechen.scaffold.domain.vo;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-25 15:50
  * @description 登录用户实体vo
  */

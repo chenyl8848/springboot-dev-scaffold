@@ -1,4 +1,4 @@
-package com.codechen.scaffold.entity;
+package com.codechen.scaffold.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 18:37
  * @description 角色权限
  */

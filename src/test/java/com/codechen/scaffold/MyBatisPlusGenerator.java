@@ -5,7 +5,7 @@ import com.github.davidfantasy.mybatisplus.generatorui.MybatisPlusToolsApplicati
 import com.github.davidfantasy.mybatisplus.generatorui.mbp.NameConverter;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-04-10 16:22
  * @description MyBatis-Plus Generator UI 启动类
  */

@@ -1,10 +1,10 @@
 package com.codechen.scaffold.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.codechen.scaffold.entity.SysUserRole;
+import com.codechen.scaffold.domain.entity.SysUserRole;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-06-15 15:36
  * @description 用户角色接口类
  */

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import static cloud.tianai.captcha.generator.impl.StandardSliderImageCaptchaGenerator.DEFAULT_SLIDER_IMAGE_TEMPLATE_PATH;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-07-05 9:58
  * @description 验证码配置类
  */

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-03-28 11:36
  * @description 通用常量枚举类
  */

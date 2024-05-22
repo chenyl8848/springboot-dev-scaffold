@@ -19,7 +19,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-04-28 15:13
  * @description redis 配置类
  */

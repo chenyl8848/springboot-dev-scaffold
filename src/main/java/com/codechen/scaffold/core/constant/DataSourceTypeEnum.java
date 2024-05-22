@@ -1,7 +1,7 @@
 package com.codechen.scaffold.core.constant;
 
 /**
- * @author cyl
+ * @author：Java陈序员
  * @date 2023-04-28 11:19
  * @description 多数据源类型枚举类
  */
