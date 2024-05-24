@@ -8,8 +8,12 @@ import com.codechen.scaffold.constant.CommonConstant;
 import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import com.codechen.scaffold.core.exception.BusinessException;
 import com.codechen.scaffold.domain.entity.SysMenu;
+import com.codechen.scaffold.domain.request.SysMenuRequest;
+import com.codechen.scaffold.domain.vo.SysMenuVo;
 import com.codechen.scaffold.mapper.SysMenuMapper;
 import com.codechen.scaffold.service.ISysMenuService;
+import org.assertj.core.util.Lists;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,23 +30,27 @@ import java.util.stream.Collectors;
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
 
     @Override
-    public void addMenu(SysMenu sysMenu) {
+    public void addMenu(SysMenuRequest sysMenuRequest) {
         // 校验菜单编码
-        checkUniqueMenuCode(sysMenu.getMenuCode());
+        checkUniqueMenuCode(sysMenuRequest.getMenuCode());
 
+        SysMenu sysMenu = new SysMenu();
+        BeanUtils.copyProperties(sysMenuRequest, sysMenu);
         save(sysMenu);
     }
 
     @Override
-    public void updateMenu(SysMenu sysMenu) {
-        SysMenu menu = getById(sysMenu.getId());
-        if (Objects.isNull(menu)) {
+    public void updateMenu(Long id, SysMenuRequest sysMenuRequest) {
+        SysMenu sysMenu = getById(id);
+        if (Objects.isNull(sysMenu)) {
             throw new BusinessException(ResultCodeEnum.SYS_MENU_NOT_EXISTS);
         }
 
-        if (StringUtils.isNotBlank(sysMenu.getMenuCode()) && !menu.getMenuCode().equals(sysMenu.getMenuCode())) {
-            checkUniqueMenuCode(sysMenu.getMenuCode());
+        if (StringUtils.isNotBlank(sysMenuRequest.getMenuCode()) && !sysMenu.getMenuCode().equals(sysMenuRequest.getMenuCode())) {
+            checkUniqueMenuCode(sysMenuRequest.getMenuCode());
         }
+
+        BeanUtils.copyProperties(sysMenuRequest, sysMenu);
 
         updateById(sysMenu);
     }
@@ -63,7 +71,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenu> menuTree() {
+    public List<SysMenuVo> menuTree() {
         LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.orderByAsc(SysMenu::getSort);
         List<SysMenu> list = list(queryWrapper);
@@ -72,14 +80,17 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<SysMenu> getPermissionMenus(List<SysMenu> menuList) {
-        List<SysMenu> permissionMenus = menuList.stream()
-                .filter(item -> item.getType().equals(CommonConstant.MENU))
-                .collect(Collectors.toList());
-
-        permissionMenus = getMenuTree(permissionMenus);
-
-//        return permissionMenus;
-        return permissionMenus.get(0).getChildren();
+        // TODO: 2024/5/24  
+//        List<SysMenu> permissionMenus = menuList.stream()
+//                .filter(item -> item.getType().equals(CommonConstant.MENU))
+//                .collect(Collectors.toList());
+//
+//        permissionMenus = getMenuTree(permissionMenus);
+//
+////        return permissionMenus;
+//        return permissionMenus.get(0).getChildren();
+        
+        return null;
     }
 
     @Override
@@ -93,18 +104,22 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         return permissionButtons;
     }
 
-    private List<SysMenu> getMenuTree(List<SysMenu> list) {
-        ArrayList<SysMenu> resultList = new ArrayList<>();
+    private List<SysMenuVo> getMenuTree(List<SysMenu> list) {
+        ArrayList<SysMenuVo> resultList = new ArrayList<>();
         List<Long> ids = list.stream().map(SysMenu::getId).collect(Collectors.toList());
         for (SysMenu sysMenu : list) {
             if (!ids.contains(sysMenu.getPid())) {
-                resultList.add(sysMenu);
+                SysMenuVo sysMenuVo = new SysMenuVo();
+                BeanUtils.copyProperties(sysMenu, sysMenuVo);
+                resultList.add(sysMenuVo);
             }
         }
 
-        for (SysMenu sysMenu : resultList) {
-            List<SysMenu> child = getChildrenMenu(sysMenu.getId(), list);
-            sysMenu.setChildren(child);
+        for (SysMenuVo sysMenuVo : resultList) {
+            List<SysMenu> sysMenuList = getChildrenMenu(sysMenuVo.getId(), list);
+            ArrayList<SysMenuVo> child = Lists.newArrayList();
+            BeanUtils.copyProperties(sysMenuList, child);
+            sysMenuVo.setChildren(child);
         }
         return resultList;
     }

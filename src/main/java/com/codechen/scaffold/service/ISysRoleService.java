@@ -5,7 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
-import com.codechen.scaffold.domain.vo.SysRoleQueryVo;
+import com.codechen.scaffold.domain.request.SysRoleQueryRequest;
+import com.codechen.scaffold.domain.request.SysRoleRequest;
 
 import java.util.List;
 
@@ -19,16 +20,17 @@ public interface ISysRoleService extends IService<SysRole> {
     /**
      * 添加角色
      *
-     * @param sysRole
+     * @param sysRoleRequest
      */
-    public void addRole(SysRole sysRole);
+    public void addRole(SysRoleRequest sysRoleRequest);
 
     /**
      * 更新角色
      *
-     * @param sysRole
+     * @param id
+     * @param sysRoleRequest
      */
-    public void updateRole(SysRole sysRole);
+    public void updateRole(Long id, SysRoleRequest sysRoleRequest);
 
     /**
      * 根据据俄色色编码获取
@@ -42,10 +44,10 @@ public interface ISysRoleService extends IService<SysRole> {
      * 列表查询
      *
      * @param sysRolePage    分页
-     * @param sysRoleQueryVo 查询条件
+     * @param sysRoleQueryRequest 查询条件
      * @return
      */
-    IPage<SysRole> queryList(Page<SysRole> sysRolePage, SysRoleQueryVo sysRoleQueryVo);
+    IPage<SysRole> queryList(Page<SysRole> sysRolePage, SysRoleQueryRequest sysRoleQueryRequest);
 
     /**
      * 分配角色菜单

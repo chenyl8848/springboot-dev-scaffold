@@ -6,19 +6,28 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.core.entity.Result;
 import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
+import com.codechen.scaffold.domain.request.SysRoleQueryRequest;
+import com.codechen.scaffold.domain.request.SysRoleRequest;
+import com.codechen.scaffold.domain.vo.SysRoleVo;
 import com.codechen.scaffold.service.ISysRoleService;
-import com.codechen.scaffold.domain.vo.SysRoleQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.util.Lists;
+import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,27 +45,28 @@ public class SysRoleController {
     private ISysRoleService sysRoleService;
 
     @ApiOperation(value = "新增角色")
-    @PostMapping("/add")
-    public Result addRole(@Validated @RequestBody SysRole sysRole) {
-        sysRoleService.addRole(sysRole);
+    @PostMapping("/")
+    public Result addRole(@Validated @RequestBody SysRoleRequest sysRoleRequest) {
+        sysRoleService.addRole(sysRoleRequest);
 
         return Result.success(null);
     }
 
     @ApiOperation(value = "修改角色")
-    @PostMapping("/update")
-    public Result updateRole(@Validated @RequestBody SysRole sysRole) {
-        if (Objects.isNull(sysRole.getId())){
+    @PutMapping("/{id}")
+    public Result updateRole(@PathVariable("id") Long id,
+                             @Validated @RequestBody SysRoleRequest sysRoleRequest) {
+        if (Objects.isNull(id)) {
             return Result.fail("角色id不能为空");
         }
 
-        sysRoleService.updateRole(sysRole);
+        sysRoleService.updateRole(id, sysRoleRequest);
 
         return Result.success(null);
     }
 
     @ApiOperation(value = "删除角色")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public Result deleteRole(@PathVariable(value = "id") Long id) {
         sysRoleService.removeById(id);
         return Result.success(null);
@@ -65,29 +75,34 @@ public class SysRoleController {
     @ApiOperation(value = "角色分页列表")
     @PostMapping("pageList/{pageNo}/{pageSize}")
     public Result pageList(@PathVariable(value = "pageNo") Long pageNo,
-                       @PathVariable(value = "pageSize") Long pageSize,
-                       @RequestBody SysRoleQueryVo sysRoleQueryVo) {
+                           @PathVariable(value = "pageSize") Long pageSize,
+                           @RequestBody SysRoleQueryRequest sysRoleQueryRequest) {
         Page<SysRole> sysRolePage = new Page<>(pageNo, pageSize);
 
-        IPage<SysRole> sysRoleIPage = sysRoleService.queryList(sysRolePage, sysRoleQueryVo);
+        IPage<SysRole> sysRoleIPage = sysRoleService.queryList(sysRolePage, sysRoleQueryRequest);
         return Result.success(sysRoleIPage);
     }
 
     @ApiOperation(value = "角色列表")
     @PostMapping("list")
-    public Result list(@RequestBody SysRoleQueryVo sysRoleQueryVo) {
+    public Result list(@RequestBody SysRoleQueryRequest sysRoleQueryRequest) {
         List<SysRole> sysRoleList = sysRoleService.list(new LambdaQueryWrapper<SysRole>()
-                .like(StringUtils.isNotBlank(sysRoleQueryVo.getRoleName()), SysRole::getRoleName, sysRoleQueryVo.getRoleName())
-                .like(StringUtils.isNotBlank(sysRoleQueryVo.getRoleCode()), SysRole::getRoleCode, sysRoleQueryVo.getRoleCode())
+                .like(StringUtils.isNotBlank(sysRoleQueryRequest.getRoleName()), SysRole::getRoleName, sysRoleQueryRequest.getRoleName())
+                .like(StringUtils.isNotBlank(sysRoleQueryRequest.getRoleCode()), SysRole::getRoleCode, sysRoleQueryRequest.getRoleCode())
                 .orderByDesc(SysRole::getCreateTime));
-        return Result.success(sysRoleList);
+
+        ArrayList<SysRoleVo> sysRoleVoList = Lists.newArrayList();
+        BeanUtils.copyProperties(sysRoleList, sysRoleVoList);
+        return Result.success(sysRoleVoList);
     }
 
     @ApiOperation(value = "根据id获取")
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     public Result getById(@PathVariable(value = "id") Long id) {
         SysRole sysRole = sysRoleService.getById(id);
-        return Result.success(sysRole);
+        SysRoleVo sysRoleVo = new SysRoleVo();
+        BeanUtils.copyProperties(sysRole, sysRoleVo);
+        return Result.success(sysRoleVo);
     }
 
     @ApiOperation(value = "分配角色菜单")

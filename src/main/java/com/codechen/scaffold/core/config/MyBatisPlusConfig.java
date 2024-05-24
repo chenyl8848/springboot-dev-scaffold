@@ -53,7 +53,7 @@ public class MyBatisPlusConfig {
                 this.setFieldValByName("createTime", LocalDateTime.now(), metaObject);
                 this.setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
                 // todo
-                this.setFieldValByName("isDeleted", 0, metaObject);
+                this.setFieldValByName("deleted", 0, metaObject);
                 this.setFieldValByName("version", 1, metaObject);
             }
 

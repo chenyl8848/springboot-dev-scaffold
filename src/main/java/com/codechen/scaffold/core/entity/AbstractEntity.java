@@ -49,8 +49,8 @@ public abstract class AbstractEntity {
     @ApiModelProperty(value = "逻辑删除(1:已删除，0:未删除)")
     @JsonIgnore
     @TableLogic
-    @TableField(value = "is_deleted", fill = FieldFill.INSERT)
-    private Integer isDeleted;
+    @TableField(value = "deleted", fill = FieldFill.INSERT)
+    private Integer deleted;
 
     /** 乐观锁 */
     @ApiModelProperty(value = "版本号")

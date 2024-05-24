@@ -2,6 +2,8 @@ package com.codechen.scaffold.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.codechen.scaffold.domain.entity.SysMenu;
+import com.codechen.scaffold.domain.request.SysMenuRequest;
+import com.codechen.scaffold.domain.vo.SysMenuVo;
 
 import java.util.List;
 
@@ -15,16 +17,17 @@ public interface ISysMenuService extends IService<SysMenu> {
     /**
      * 添加菜单
      *
-     * @param sysMenu
+     * @param sysMenuRequest
      */
-    public void addMenu(SysMenu sysMenu);
+    public void addMenu(SysMenuRequest sysMenuRequest);
 
     /**
      * 修改菜单
      *
-     * @param sysMenu
+     * @param id
+     * @param sysMenuRequest
      */
-    public void updateMenu(SysMenu sysMenu);
+    public void updateMenu(Long id, SysMenuRequest sysMenuRequest);
 
     public SysMenu getMenuByMenuCode(String menuCode);
 
@@ -33,7 +36,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      *
      * @return
      */
-    public List<SysMenu> menuTree();
+    public List<SysMenuVo> menuTree();
 
     /**
      * 获取有权限的菜单信息

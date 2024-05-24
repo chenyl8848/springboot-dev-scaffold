@@ -73,7 +73,7 @@ public class SwaggerConfig {
                 .groupName("webApi")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.cyl.scaffold.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.codechen.scaffold.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .globalRequestParameters(paramsList);

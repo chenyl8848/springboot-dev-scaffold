@@ -5,15 +5,19 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.core.entity.Result;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.entity.SysUser;
+import com.codechen.scaffold.domain.request.SysUserQueryRequest;
+import com.codechen.scaffold.domain.request.SysUserRequest;
+import com.codechen.scaffold.domain.vo.SysUserVo;
 import com.codechen.scaffold.service.ISysUserService;
-import com.codechen.scaffold.domain.vo.LoginUserVo;
-import com.codechen.scaffold.domain.vo.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,53 +40,47 @@ public class SysUserController {
     @Resource
     private ISysUserService sysUserService;
 
-    @ApiOperation(value = "登录")
-    @PostMapping("/login")
-    public Result login(@Validated @RequestBody LoginUserVo loginUserVo) {
-        String token = sysUserService.login(loginUserVo);
-        return Result.success(token);
-    }
-
     @ApiOperation(value = "获取用户信息")
     @GetMapping("/info")
     public Result getUserInfo() {
 
-        SysUser sysUser = sysUserService.getUserInfo();
+        SysUserVo sysUserVo = sysUserService.getUserInfo();
 
-        return Result.success(sysUser);
+        return Result.success(sysUserVo);
     }
 
     @ApiOperation(value = "新增用户")
-    @PostMapping("/add")
-    public Result addUser(@Validated @RequestBody SysUser sysUser) {
+    @PostMapping("/")
+    public Result addUser(@Validated @RequestBody SysUserRequest sysUserRequest) {
 
-        sysUserService.addUser(sysUser);
+        sysUserService.addUser(sysUserRequest);
 
         return Result.success(null);
     }
 
     @ApiOperation(value = "修改用户")
-    @PostMapping("/update")
-    public Result updateUser(@Validated @RequestBody SysUser sysUser) {
+    @PutMapping("/{id}")
+    public Result updateUser(@PathVariable("id") Long id,
+                             @Validated @RequestBody SysUserRequest sysUserRequest) {
 
-        if (Objects.isNull(sysUser.getId())){
+        if (Objects.isNull(id)) {
             return Result.fail("用户id不能为空");
         }
 
-        sysUserService.updateUser(sysUser);
+        sysUserService.updateUser(id, sysUserRequest);
 
         return Result.success(null);
     }
 
     @ApiOperation(value = "删除用户")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public Result deleteUser(@PathVariable(value = "id") Long id) {
         sysUserService.removeById(id);
         return Result.success(null);
     }
 
     @ApiOperation(value = "批量删除用户")
-    @PostMapping("/batchDelete")
+    @DeleteMapping("/")
     public Result batchDeleteUser(@RequestBody Long[] ids) {
         sysUserService.removeBatchByIds(Arrays.asList(ids));
         return Result.success(null);
@@ -92,18 +90,20 @@ public class SysUserController {
     @PostMapping("/pageList/{pageNo}/{pageSize}")
     public Result list(@PathVariable(value = "pageNo") Long pageNo,
                        @PathVariable(value = "pageSize") Long pageSize,
-                       @RequestBody SysUserQueryVo sysUserQueryVo) {
+                       @RequestBody SysUserQueryRequest sysUserQueryRequest) {
         Page<SysUser> sysUserPage = new Page<>(pageNo, pageSize);
 
-        IPage<SysUser> sysUserIPage = sysUserService.queryList(sysUserPage, sysUserQueryVo);
-        return Result.success(sysUserIPage);
+        IPage<SysUserVo> sysUserVoIPage = sysUserService.queryList(sysUserPage, sysUserQueryRequest);
+        return Result.success(sysUserVoIPage);
     }
 
     @ApiOperation(value = "根据id获取")
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     public Result getById(@PathVariable(value = "id") Long id) {
         SysUser sysUser = sysUserService.getById(id);
-        return Result.success(sysUser);
+        SysUserVo sysUserVo = new SysUserVo();
+        BeanUtils.copyProperties(sysUser, sysUserVo);
+        return Result.success(sysUserVo);
     }
 
 
@@ -118,7 +118,7 @@ public class SysUserController {
     @ApiOperation(value = "获取已分配的角色")
     @PostMapping("/getAssignedUserRole/{userId}")
     public Result getAssignedUserRole(@PathVariable("userId") Long userId) {
-        List<SysRole> list =  sysUserService.getAssignedUserRole(userId);
+        List<SysRole> list = sysUserService.getAssignedUserRole(userId);
         return Result.success(list);
     }
 }

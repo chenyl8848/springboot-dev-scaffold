@@ -6,8 +6,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.entity.SysUser;
-import com.codechen.scaffold.domain.vo.LoginUserVo;
-import com.codechen.scaffold.domain.vo.SysUserQueryVo;
+import com.codechen.scaffold.domain.request.SysUserQueryRequest;
+import com.codechen.scaffold.domain.request.SysUserRequest;
+import com.codechen.scaffold.domain.vo.SysUserVo;
 
 import java.util.List;
 
@@ -23,17 +24,18 @@ public interface ISysUserService extends IService<SysUser> {
      *
      * @param sysUser
      */
-    public void addUser(SysUser sysUser);
+    public void addUser(SysUserRequest sysUserRequest);
 
     /**
      * 修改用户
      *
+     * @param id
      * @param sysUser
      */
-    public void updateUser(SysUser sysUser);
+    public void updateUser(Long id, SysUserRequest sysUserRequest);
 
     /**
-     * 根究用户名查询
+     * 根据用户名查询
      *
      * @param username
      * @return
@@ -41,7 +43,7 @@ public interface ISysUserService extends IService<SysUser> {
     public SysUser getUserByUsername(String username);
 
     /**
-     * 根究手机号查询
+     * 根据手机号查询
      *
      * @param phone
      * @return
@@ -49,13 +51,21 @@ public interface ISysUserService extends IService<SysUser> {
     public SysUser getUserByPhone(String phone);
 
     /**
-     * 列表查询
+     * 根据邮箱查询
      *
-     * @param sysUserPage    分页
-     * @param sysUserQueryVo 查询条件
+     * @param email
      * @return
      */
-    IPage<SysUser> queryList(Page<SysUser> sysUserPage, SysUserQueryVo sysUserQueryVo);
+    public SysUser getUserByEmail(String email);
+
+    /**
+     * 列表查询
+     *
+     * @param sysUserPage         分页
+     * @param sysUserQueryRequest 查询条件
+     * @return
+     */
+    IPage<SysUserVo> queryList(Page<SysUser> sysUserPage, SysUserQueryRequest sysUserQueryRequest);
 
     /**
      * 分配用户角色
@@ -82,18 +92,10 @@ public interface ISysUserService extends IService<SysUser> {
     List<SysMenu> getAssignedMenu(Long userId);
 
     /**
-     * 用户登录
-     *
-     * @param loginUserVo
-     * @return
-     */
-    public String login(LoginUserVo loginUserVo);
-
-    /**
      * 获取用户信息
      *
      * @return
      */
-    public SysUser getUserInfo();
+    public SysUserVo getUserInfo();
 
 }

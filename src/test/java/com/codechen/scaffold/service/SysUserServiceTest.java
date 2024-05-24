@@ -1,6 +1,7 @@
 package com.codechen.scaffold.service;
 
 import com.codechen.scaffold.domain.entity.SysUser;
+import com.codechen.scaffold.domain.request.SysUserRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,11 +19,12 @@ public class SysUserServiceTest {
 
     @Test
     public void testAddUser() {
-        SysUser sysUser = new SysUser();
+        SysUserRequest sysUserRequest = new SysUserRequest();
 
-        sysUser.setUsername("Test");
-        sysUser.setName("Test");
+        sysUserRequest.setUsername("admin");
+        sysUserRequest.setNickName("管理员");
+        sysUserRequest.setPassword("123456");
 
-        sysUserService.addUser(sysUser);
+        sysUserService.addUser(sysUserRequest);
     }
 }
