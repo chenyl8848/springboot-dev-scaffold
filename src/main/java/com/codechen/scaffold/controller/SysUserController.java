@@ -7,6 +7,7 @@ import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.entity.SysUser;
 import com.codechen.scaffold.domain.request.SysUserQueryRequest;
 import com.codechen.scaffold.domain.request.SysUserRequest;
+import com.codechen.scaffold.domain.vo.SysRoleVo;
 import com.codechen.scaffold.domain.vo.SysUserVo;
 import com.codechen.scaffold.service.ISysUserService;
 import io.swagger.annotations.Api;
@@ -118,7 +119,7 @@ public class SysUserController {
     @ApiOperation(value = "获取已分配的角色")
     @PostMapping("/getAssignedUserRole/{userId}")
     public Result getAssignedUserRole(@PathVariable("userId") Long userId) {
-        List<SysRole> list = sysUserService.getAssignedUserRole(userId);
+        List<SysRoleVo> list = sysUserService.getAssignedUserRole(userId);
         return Result.success(list);
     }
 }

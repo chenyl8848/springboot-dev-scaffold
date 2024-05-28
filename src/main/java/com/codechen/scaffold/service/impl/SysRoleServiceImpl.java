@@ -10,12 +10,14 @@ import com.codechen.scaffold.core.exception.BusinessException;
 import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.entity.SysRoleMenu;
+import com.codechen.scaffold.domain.request.SysRoleQueryRequest;
 import com.codechen.scaffold.domain.request.SysRoleRequest;
+import com.codechen.scaffold.domain.vo.SysMenuVo;
+import com.codechen.scaffold.domain.vo.SysRoleVo;
 import com.codechen.scaffold.mapper.SysRoleMapper;
 import com.codechen.scaffold.service.ISysMenuService;
 import com.codechen.scaffold.service.ISysRoleMenuService;
 import com.codechen.scaffold.service.ISysRoleService;
-import com.codechen.scaffold.domain.request.SysRoleQueryRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +89,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public IPage<SysRole> queryList(Page<SysRole> sysRolePage, SysRoleQueryRequest sysRoleQueryRequest) {
+    public IPage<SysRoleVo> queryList(Page<SysRole> sysRolePage, SysRoleQueryRequest sysRoleQueryRequest) {
 
         LambdaQueryWrapper<SysRole> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.like(StringUtils.isNotBlank(sysRoleQueryRequest.getRoleCode()), SysRole::getRoleCode, sysRoleQueryRequest.getRoleCode());
@@ -95,7 +97,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
         Page<SysRole> page = page(sysRolePage, queryWrapper);
 
-        return page;
+        IPage<SysRoleVo> sysRoleVoPage = new Page<>();
+        BeanUtils.copyProperties(page, sysRoleVoPage);
+
+        return sysRoleVoPage;
     }
 
     @Override
@@ -119,7 +124,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public List<SysMenu> getAssignedMenu(Long id) {
+    public List<SysMenuVo> getAssignedMenu(Long id) {
         SysRole sysRole = getById(id);
         if (Objects.isNull(sysRole)) {
             throw new BusinessException(ResultCodeEnum.SYS_ROLE_NOT_EXISTS);
@@ -131,24 +136,34 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 .map(SysRoleMenu::getMenuId)
                 .collect(Collectors.toList());
         if (menuIds != null && menuIds.size() > 0) {
-            return sysMenuService.list(new LambdaQueryWrapper<SysMenu>().in(SysMenu::getId, menuIds));
+            List<SysMenu> sysMenuList = sysMenuService.list(new LambdaQueryWrapper<SysMenu>().in(SysMenu::getId, menuIds));
+            List<SysMenuVo> sysMenuVoList = new ArrayList<>();
+
+            BeanUtils.copyProperties(sysMenuList, sysMenuVoList);
+            return sysMenuVoList;
         } else {
-            return new ArrayList<SysMenu>();
+            return new ArrayList<SysMenuVo>();
         }
 
     }
 
     @Override
-    public List<SysMenu> getAssignedMenu(List<Long> ids) {
+    public List<SysMenuVo> getAssignedMenu(List<Long> ids) {
         List<SysRoleMenu> sysRoleMenuList = sysRoleMenuService.list(new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getRoleId, ids));
 
         List<Long> menuIds = sysRoleMenuList.stream()
                 .map(SysRoleMenu::getMenuId)
                 .collect(Collectors.toList());
         if (menuIds != null && menuIds.size() > 0) {
-            return sysMenuService.list(new LambdaQueryWrapper<SysMenu>().in(SysMenu::getId, menuIds).orderByAsc(SysMenu::getSort));
+            List<SysMenu> sysMenuList = sysMenuService.list(new LambdaQueryWrapper<SysMenu>()
+                    .in(SysMenu::getId, menuIds)
+                    .orderByAsc(SysMenu::getSort));
+
+            List<SysMenuVo> sysMenuVoList = new ArrayList<>();
+            BeanUtils.copyProperties(sysMenuList, sysMenuVoList);
+            return sysMenuVoList;
         } else {
-            return new ArrayList<SysMenu>();
+            return new ArrayList<SysMenuVo>();
         }
     }
 }

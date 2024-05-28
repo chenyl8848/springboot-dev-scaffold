@@ -7,6 +7,8 @@ import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.request.SysRoleQueryRequest;
 import com.codechen.scaffold.domain.request.SysRoleRequest;
+import com.codechen.scaffold.domain.vo.SysMenuVo;
+import com.codechen.scaffold.domain.vo.SysRoleVo;
 
 import java.util.List;
 
@@ -47,7 +49,7 @@ public interface ISysRoleService extends IService<SysRole> {
      * @param sysRoleQueryRequest 查询条件
      * @return
      */
-    IPage<SysRole> queryList(Page<SysRole> sysRolePage, SysRoleQueryRequest sysRoleQueryRequest);
+    IPage<SysRoleVo> queryList(Page<SysRole> sysRolePage, SysRoleQueryRequest sysRoleQueryRequest);
 
     /**
      * 分配角色菜单
@@ -62,12 +64,12 @@ public interface ISysRoleService extends IService<SysRole> {
      * @param id 角色id
      * @return
      */
-    List<SysMenu> getAssignedMenu(Long id);
+    List<SysMenuVo> getAssignedMenu(Long id);
 
     /**
      * 获取已分配菜单
      * @param ids 角色id集合
      * @return
      */
-    List<SysMenu> getAssignedMenu(List<Long> ids);
+    List<SysMenuVo> getAssignedMenu(List<Long> ids);
 }

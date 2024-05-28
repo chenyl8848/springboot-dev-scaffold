@@ -8,6 +8,7 @@ import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.request.SysRoleQueryRequest;
 import com.codechen.scaffold.domain.request.SysRoleRequest;
+import com.codechen.scaffold.domain.vo.SysMenuVo;
 import com.codechen.scaffold.domain.vo.SysRoleVo;
 import com.codechen.scaffold.service.ISysRoleService;
 import io.swagger.annotations.Api;
@@ -15,7 +16,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,7 +79,7 @@ public class SysRoleController {
                            @RequestBody SysRoleQueryRequest sysRoleQueryRequest) {
         Page<SysRole> sysRolePage = new Page<>(pageNo, pageSize);
 
-        IPage<SysRole> sysRoleIPage = sysRoleService.queryList(sysRolePage, sysRoleQueryRequest);
+        IPage<SysRoleVo> sysRoleIPage = sysRoleService.queryList(sysRolePage, sysRoleQueryRequest);
         return Result.success(sysRoleIPage);
     }
 
@@ -118,7 +118,7 @@ public class SysRoleController {
     @PostMapping("/getAssignedMenu/{id}")
     public Result getAssignedMenu(@PathVariable("id") Long id) {
 
-        List<SysMenu> sysMenuList = sysRoleService.getAssignedMenu(id);
-        return Result.success(sysMenuList);
+        List<SysMenuVo> sysMenuVoList = sysRoleService.getAssignedMenu(id);
+        return Result.success(sysMenuVoList);
     }
 }

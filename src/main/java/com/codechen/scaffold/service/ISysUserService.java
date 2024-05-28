@@ -3,11 +3,12 @@ package com.codechen.scaffold.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.entity.SysUser;
 import com.codechen.scaffold.domain.request.SysUserQueryRequest;
 import com.codechen.scaffold.domain.request.SysUserRequest;
+import com.codechen.scaffold.domain.vo.SysMenuVo;
+import com.codechen.scaffold.domain.vo.SysRoleVo;
 import com.codechen.scaffold.domain.vo.SysUserVo;
 
 import java.util.List;
@@ -81,7 +82,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userId
      * @return
      */
-    List<SysRole> getAssignedUserRole(Long userId);
+    List<SysRoleVo> getAssignedUserRole(Long userId);
 
     /**
      * 根据用户id获取已分配的菜单
@@ -89,7 +90,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userId
      * @return
      */
-    List<SysMenu> getAssignedMenu(Long userId);
+    List<SysMenuVo> getAssignedMenu(Long userId);
 
     /**
      * 获取用户信息

@@ -5,18 +5,18 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.codechen.scaffold.constant.CommonConstant;
 import com.codechen.scaffold.core.constant.CommonCodeEnum;
 import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import com.codechen.scaffold.core.exception.BusinessException;
 import com.codechen.scaffold.core.util.BeanUtil;
 import com.codechen.scaffold.core.util.ThreadLocalUtil;
-import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.entity.SysUser;
 import com.codechen.scaffold.domain.entity.SysUserRole;
 import com.codechen.scaffold.domain.request.SysUserQueryRequest;
 import com.codechen.scaffold.domain.request.SysUserRequest;
+import com.codechen.scaffold.domain.vo.SysMenuVo;
+import com.codechen.scaffold.domain.vo.SysRoleVo;
 import com.codechen.scaffold.domain.vo.SysUserVo;
 import com.codechen.scaffold.mapper.SysUserMapper;
 import com.codechen.scaffold.service.ISysMenuService;
@@ -145,7 +145,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public List<SysRole> getAssignedUserRole(Long userId) {
+    public List<SysRoleVo> getAssignedUserRole(Long userId) {
         SysUser sysUser = getById(userId);
         if (Objects.isNull(sysUser)) {
             throw new BusinessException(ResultCodeEnum.SYS_USER_NOT_EXISTS);
@@ -158,21 +158,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (roleIds != null && roleIds.size() > 0) {
 
             List<SysRole> sysRoleList = sysRoleService.list(new LambdaQueryWrapper<SysRole>().in(SysRole::getId, roleIds));
-            return sysRoleList;
+            List<SysRoleVo> sysRoleVoList = new ArrayList<>();
+            BeanUtils.copyProperties(sysRoleList, sysRoleVoList);
+            return sysRoleVoList;
         } else {
-            return new ArrayList<SysRole>();
+            return new ArrayList<SysRoleVo>();
         }
     }
 
     @Override
-    public List<SysMenu> getAssignedMenu(Long userId) {
+    public List<SysMenuVo> getAssignedMenu(Long userId) {
         List<Long> roleIds = getAssignedUserRole(userId).stream()
-                .map(SysRole::getId)
+                .map(SysRoleVo::getId)
                 .collect(Collectors.toList());
 
-        List<SysMenu> sysMenus = sysRoleService.getAssignedMenu(roleIds);
+        List<SysMenuVo> sysMenuVoList = sysRoleService.getAssignedMenu(roleIds);
 
-        return sysMenus;
+        return sysMenuVoList;
     }
 
     @Override
