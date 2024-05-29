@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.codechen.scaffold.constant.CommonConstant;
 import com.codechen.scaffold.core.constant.CommonCodeEnum;
 import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import com.codechen.scaffold.core.exception.BusinessException;
 import com.codechen.scaffold.core.util.BeanUtil;
 import com.codechen.scaffold.core.util.ThreadLocalUtil;
+import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.entity.SysUser;
 import com.codechen.scaffold.domain.entity.SysUserRole;
@@ -24,7 +26,6 @@ import com.codechen.scaffold.service.ISysRoleService;
 import com.codechen.scaffold.service.ISysUserRoleService;
 import com.codechen.scaffold.service.ISysUserService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,7 +85,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (StringUtils.isNotBlank(sysUserRequest.getEmail()) && !sysUser.getEmail().equals(sysUserRequest.getEmail())) {
             checkUniqueEmail(sysUserRequest.getEmail());
         }
-        BeanUtils.copyProperties(sysUserRequest, sysUser);
+        BeanUtil.copy(sysUserRequest, sysUser);
 
         updateById(sysUser);
     }
@@ -122,7 +123,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         Page<SysUser> page = page(sysUserPage, queryWrapper);
 
         Page<SysUserVo> sysUserVoPage = new Page<>();
-        BeanUtils.copyProperties(page, sysUserVoPage);
+        BeanUtil.copy(page, sysUserVoPage);
         return sysUserVoPage;
     }
 
@@ -159,10 +160,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
             List<SysRole> sysRoleList = sysRoleService.list(new LambdaQueryWrapper<SysRole>().in(SysRole::getId, roleIds));
             List<SysRoleVo> sysRoleVoList = new ArrayList<>();
-            BeanUtils.copyProperties(sysRoleList, sysRoleVoList);
+            BeanUtil.copy(sysRoleList, sysRoleVoList);
             return sysRoleVoList;
         } else {
-            return new ArrayList<SysRoleVo>();
+            return new ArrayList<>();
         }
     }
 
@@ -190,25 +191,29 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (Objects.isNull(sysUser)) {
             throw new BusinessException(ResultCodeEnum.SYS_USER_NOT_EXISTS);
         }
-        BeanUtils.copyProperties(sysUser, sysUserVo);
-        // TODO: 2024/5/24  用户角色、菜单权限
-//        List<SysRole> sysRoles = new ArrayList<>();
-//        List<SysMenu> sysMenus = new ArrayList<>();
-//
-//        if (username.equals(CommonConstant.ADMIN_USER_NAME)) {
-//            sysRoles = sysRoleService.list();
-//            sysMenus = sysMenuService.list(new LambdaQueryWrapper<SysMenu>().orderByAsc(SysMenu::getSort));
-//        } else {
-//            sysRoles = getAssignedUserRole(sysUser.getId());
-//            sysMenus = getAssignedMenu(sysUser.getId());
-//        }
-//
-//        List<SysMenu> permissionMenus = sysMenuService.getPermissionMenus(sysMenus);
-//        List<String> permissionButtons = sysMenuService.getPermissionButtons(sysMenus);
-//
-//        sysUser.setRoles(sysRoles);
-//        sysUser.setMenus(permissionMenus);
-//        sysUser.setButtons(permissionButtons);
+        BeanUtil.copy(sysUser, sysUserVo);
+        List<SysRoleVo> sysRoleVoList = new ArrayList<>();
+        List<SysMenuVo> sysMenuVoList = new ArrayList<>();
+        List<SysMenu> sysMenuList = new ArrayList<>();
+
+        if (username.equals(CommonConstant.ADMIN_USER_NAME)) {
+            List<SysRole> sysRoleList = sysRoleService.list();
+            sysMenuList = sysMenuService.list(new LambdaQueryWrapper<SysMenu>().orderByAsc(SysMenu::getSort));
+
+            BeanUtil.copy(sysRoleList, sysRoleVoList);
+            BeanUtil.copy(sysMenuVoList, sysMenuVoList);
+        } else {
+            sysRoleVoList = getAssignedUserRole(sysUser.getId());
+            sysMenuVoList = getAssignedMenu(sysUser.getId());
+            BeanUtil.copy(sysMenuVoList, sysMenuList);
+        }
+
+        List<SysMenuVo> permissionMenus = sysMenuService.getPermissionMenus(sysMenuList);
+        List<String> permissionButtons = sysMenuService.getPermissionButtons(sysMenuList);
+
+        sysUserVo.setRoles(sysRoleVoList);
+        sysUserVo.setMenus(permissionMenus);
+        sysUserVo.setButtons(permissionButtons);
 
         return sysUserVo;
     }

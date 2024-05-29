@@ -43,7 +43,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @param menuList
      * @return
      */
-    public List<SysMenu> getPermissionMenus(List<SysMenu> menuList);
+    public List<SysMenuVo> getPermissionMenus(List<SysMenu> menuList);
 
     /**
      * 获取有权限的按钮信息

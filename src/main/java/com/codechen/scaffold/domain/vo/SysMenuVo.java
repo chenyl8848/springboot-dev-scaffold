@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Data
 @ApiModel(description = "系统菜单")
-public class SysMenuVo extends AbstractEntity {
+public class SysMenuVo extends BaseVo {
 
 	@ApiModelProperty(value = "所属上级")
 	private Long pid;

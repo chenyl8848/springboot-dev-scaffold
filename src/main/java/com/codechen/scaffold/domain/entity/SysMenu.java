@@ -22,11 +22,11 @@ public class SysMenu extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "所属上级")
+	@ApiModelProperty(value = "父级菜单")
 	@TableField("pid")
 	private Long pid;
 
-	@ApiModelProperty(value = "名称")
+	@ApiModelProperty(value = "菜单名称")
 	@TableField("menu_name")
 	@NotBlank(message = "菜单名称不能为空")
 	private String menuName;
@@ -48,15 +48,15 @@ public class SysMenu extends AbstractEntity {
 	@TableField("path")
 	private String path;
 
-	@ApiModelProperty(value = "类型(1:菜单,2:按钮)")
+	@ApiModelProperty(value = "菜单类型 1:菜单 2:按钮")
 	@TableField("type")
 	private Integer type;
 
-	@ApiModelProperty(value = "状态(0:禁止,1:正常)")
+	@ApiModelProperty(value = "菜单状态 0-正常 1-禁用")
 	@TableField("status")
 	private Integer status;
 
-	@ApiModelProperty(value = "是否隐藏(0:显示,1:隐藏)")
+	@ApiModelProperty(value = "是否隐藏 0-显示 1-隐藏")
 	@TableField("is_hidden")
 	private Integer isHidden;
 
@@ -64,7 +64,7 @@ public class SysMenu extends AbstractEntity {
 	@TableField("sort")
 	private Integer sort = 0;
 
-	@ApiModelProperty(value = "是否外链(0:否,1:是)")
+	@ApiModelProperty(value = "是否外链 0-否 1-是")
 	@TableField("is_external")
 	private Integer isExternal;
 

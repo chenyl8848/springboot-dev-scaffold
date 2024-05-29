@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import com.codechen.scaffold.core.exception.BusinessException;
+import com.codechen.scaffold.core.util.BeanUtil;
 import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.entity.SysRoleMenu;
@@ -19,7 +20,6 @@ import com.codechen.scaffold.service.ISysMenuService;
 import com.codechen.scaffold.service.ISysRoleMenuService;
 import com.codechen.scaffold.service.ISysRoleService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +51,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         checkUniqueRoleCode(sysRoleRequest.getRoleCode());
 
         SysRole sysRole = new SysRole();
-        BeanUtils.copyProperties(sysRoleRequest, sysRole);
+        BeanUtil.copy(sysRoleRequest, sysRole);
 
         save(sysRole);
 
@@ -68,7 +68,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             checkUniqueRoleCode(sysRoleRequest.getRoleCode());
         }
 
-        BeanUtils.copyProperties(sysRoleRequest, sysRole);
+        BeanUtil.copy(sysRoleRequest, sysRole);
 
         updateById(sysRole);
     }
@@ -98,7 +98,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         Page<SysRole> page = page(sysRolePage, queryWrapper);
 
         IPage<SysRoleVo> sysRoleVoPage = new Page<>();
-        BeanUtils.copyProperties(page, sysRoleVoPage);
+        BeanUtil.copy(page, sysRoleVoPage);
 
         return sysRoleVoPage;
     }
@@ -139,7 +139,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             List<SysMenu> sysMenuList = sysMenuService.list(new LambdaQueryWrapper<SysMenu>().in(SysMenu::getId, menuIds));
             List<SysMenuVo> sysMenuVoList = new ArrayList<>();
 
-            BeanUtils.copyProperties(sysMenuList, sysMenuVoList);
+            BeanUtil.copy(sysMenuList, sysMenuVoList);
             return sysMenuVoList;
         } else {
             return new ArrayList<SysMenuVo>();
@@ -160,7 +160,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                     .orderByAsc(SysMenu::getSort));
 
             List<SysMenuVo> sysMenuVoList = new ArrayList<>();
-            BeanUtils.copyProperties(sysMenuList, sysMenuVoList);
+            BeanUtil.copy(sysMenuList, sysMenuVoList);
             return sysMenuVoList;
         } else {
             return new ArrayList<SysMenuVo>();

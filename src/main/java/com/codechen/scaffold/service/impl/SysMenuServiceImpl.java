@@ -7,13 +7,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.codechen.scaffold.constant.CommonConstant;
 import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import com.codechen.scaffold.core.exception.BusinessException;
+import com.codechen.scaffold.core.util.BeanUtil;
 import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.request.SysMenuRequest;
 import com.codechen.scaffold.domain.vo.SysMenuVo;
 import com.codechen.scaffold.mapper.SysMenuMapper;
 import com.codechen.scaffold.service.ISysMenuService;
-import org.assertj.core.util.Lists;
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         checkUniqueMenuCode(sysMenuRequest.getMenuCode());
 
         SysMenu sysMenu = new SysMenu();
-        BeanUtils.copyProperties(sysMenuRequest, sysMenu);
+        BeanUtil.copy(sysMenuRequest, sysMenu);
         save(sysMenu);
     }
 
@@ -50,7 +50,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             checkUniqueMenuCode(sysMenuRequest.getMenuCode());
         }
 
-        BeanUtils.copyProperties(sysMenuRequest, sysMenu);
+        BeanUtil.copy(sysMenuRequest, sysMenu);
 
         updateById(sysMenu);
     }
@@ -79,18 +79,20 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenu> getPermissionMenus(List<SysMenu> menuList) {
-        // TODO: 2024/5/24  
-//        List<SysMenu> permissionMenus = menuList.stream()
-//                .filter(item -> item.getType().equals(CommonConstant.MENU))
-//                .collect(Collectors.toList());
-//
-//        permissionMenus = getMenuTree(permissionMenus);
-//
-////        return permissionMenus;
-//        return permissionMenus.get(0).getChildren();
-        
-        return null;
+    public List<SysMenuVo> getPermissionMenus(List<SysMenu> menuList) {
+        List<SysMenu> permissionMenus = menuList.stream()
+                .filter(item -> item.getType().equals(CommonConstant.MENU))
+                .collect(Collectors.toList());
+
+        List<SysMenuVo> menuTree = getMenuTree(permissionMenus);
+
+        if (CollectionUtils.isNotEmpty(menuTree)) {
+//            return menuTree.get(0).getChildren();
+            return menuTree;
+        } else {
+            return new ArrayList<>();
+        }
+
     }
 
     @Override
@@ -110,16 +112,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         for (SysMenu sysMenu : list) {
             if (!ids.contains(sysMenu.getPid())) {
                 SysMenuVo sysMenuVo = new SysMenuVo();
-                BeanUtils.copyProperties(sysMenu, sysMenuVo);
+                BeanUtil.copy(sysMenu, sysMenuVo);
                 resultList.add(sysMenuVo);
             }
         }
 
         for (SysMenuVo sysMenuVo : resultList) {
             List<SysMenu> sysMenuList = getChildrenMenu(sysMenuVo.getId(), list);
-            ArrayList<SysMenuVo> child = Lists.newArrayList();
-            BeanUtils.copyProperties(sysMenuList, child);
-            sysMenuVo.setChildren(child);
+            List<SysMenuVo> sysMenuVoList = BeanUtil.copyList(sysMenuList, SysMenuVo.class);
+            sysMenuVo.setChildren(sysMenuVoList);
         }
         return resultList;
     }

@@ -1,9 +1,10 @@
 package com.codechen.scaffold.domain.vo;
 
-import com.codechen.scaffold.core.entity.AbstractEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author：Java陈序员
@@ -12,7 +13,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "用户信息")
-public class SysUserVo extends AbstractEntity {
+public class SysUserVo extends BaseVo {
 
     @ApiModelProperty(value = "用户名")
     private String username;
@@ -28,4 +29,13 @@ public class SysUserVo extends AbstractEntity {
 
     @ApiModelProperty(value = "邮箱")
     private String email;
+
+    @ApiModelProperty(value = "角色信息")
+    private List<SysRoleVo> roles;
+
+    @ApiModelProperty(value = "菜单信息")
+    private List<SysMenuVo> menus;
+
+    @ApiModelProperty(value = "按钮信息")
+    private List<String> buttons;
 }

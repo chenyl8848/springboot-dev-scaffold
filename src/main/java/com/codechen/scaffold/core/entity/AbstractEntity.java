@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 /**
  * @author：Java陈序员
  * @date 2023-03-28 14:41
- * @description 通用抽象 entity
+ * @description 通用 entity
  */
 @Data
 public abstract class AbstractEntity {
@@ -46,7 +46,7 @@ public abstract class AbstractEntity {
     private LocalDateTime updateTime;
 
     /** 逻辑删除 */
-    @ApiModelProperty(value = "逻辑删除(1:已删除，0:未删除)")
+    @ApiModelProperty(value = "逻辑删除 0-未删除 1-已删除)")
     @JsonIgnore
     @TableLogic
     @TableField(value = "deleted", fill = FieldFill.INSERT)

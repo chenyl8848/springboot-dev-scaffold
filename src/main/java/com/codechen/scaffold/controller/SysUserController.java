@@ -3,6 +3,7 @@ package com.codechen.scaffold.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.core.entity.Result;
+import com.codechen.scaffold.core.util.BeanUtil;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.entity.SysUser;
 import com.codechen.scaffold.domain.request.SysUserQueryRequest;
@@ -12,7 +13,6 @@ import com.codechen.scaffold.domain.vo.SysUserVo;
 import com.codechen.scaffold.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +43,7 @@ public class SysUserController {
 
     @ApiOperation(value = "获取用户信息")
     @GetMapping("/info")
-    public Result getUserInfo() {
+    public Result<SysUserVo> getUserInfo() {
 
         SysUserVo sysUserVo = sysUserService.getUserInfo();
 
@@ -103,7 +103,7 @@ public class SysUserController {
     public Result getById(@PathVariable(value = "id") Long id) {
         SysUser sysUser = sysUserService.getById(id);
         SysUserVo sysUserVo = new SysUserVo();
-        BeanUtils.copyProperties(sysUser, sysUserVo);
+        BeanUtil.copy(sysUser, sysUserVo);
         return Result.success(sysUserVo);
     }
 

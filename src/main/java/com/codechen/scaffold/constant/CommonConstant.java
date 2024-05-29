@@ -3,7 +3,7 @@ package com.codechen.scaffold.constant;
 /**
  * @author：Java陈序员
  * @date 2023-06-26 11:34
- * @description 通用实体类
+ * @description 通用常量类
  */
 public class CommonConstant {
 
@@ -14,5 +14,5 @@ public class CommonConstant {
     public static final Integer BUTTON = 2;
 
     /** 管理员用户名 */
-    public static final String ADMIN_USER_NAME = "superAdmin";
+    public static final String ADMIN_USER_NAME = "admin";
 }
