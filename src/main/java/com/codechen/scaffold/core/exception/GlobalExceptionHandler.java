@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
         logger.error(exception.getMessage());
         exception.printStackTrace();
 
-        return Result.fail(exception.getMessage());
+        return Result.fail(ResultCodeEnum.FAIL.getCode(), exception.getMessage());
     }
 
     @ExceptionHandler(value = BusinessException.class)

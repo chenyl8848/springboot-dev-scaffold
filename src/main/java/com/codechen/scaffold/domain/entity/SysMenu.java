@@ -69,7 +69,6 @@ public class SysMenu extends AbstractEntity {
 	private Integer isExternal;
 
 	@ApiModelProperty(value = "层级")
-	@TableField(exist = false)
 	private Integer level;
 
 	@ApiModelProperty(value = "下级")

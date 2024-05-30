@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.core.entity.Result;
 import com.codechen.scaffold.core.util.BeanUtil;
-import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.request.SysRoleQueryRequest;
 import com.codechen.scaffold.domain.request.SysRoleRequest;

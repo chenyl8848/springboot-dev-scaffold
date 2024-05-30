@@ -20,6 +20,7 @@ import com.codechen.scaffold.service.ISysMenuService;
 import com.codechen.scaffold.service.ISysRoleMenuService;
 import com.codechen.scaffold.service.ISysRoleService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,8 +99,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         Page<SysRole> page = page(sysRolePage, queryWrapper);
 
         IPage<SysRoleVo> sysRoleVoPage = new Page<>();
-        BeanUtil.copy(page, sysRoleVoPage);
-
+        // fixme 使用自研的 BeanUtil 有 bug
+//        BeanUtil.copy(page, sysRoleVoPage);
+        BeanUtils.copyProperties(page, sysRolePage);
         return sysRoleVoPage;
     }
 

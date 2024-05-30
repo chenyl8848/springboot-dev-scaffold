@@ -20,7 +20,7 @@ import java.util.List;
 public class SysMenuRequest {
 
 	@ApiModelProperty(value = "所属上级")
-	private Long pid;
+	private Long pid = 0L;
 
 	@ApiModelProperty(value = "名称")
 	@NotBlank(message = "菜单名称不能为空")

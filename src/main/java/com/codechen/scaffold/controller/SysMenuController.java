@@ -1,7 +1,6 @@
 package com.codechen.scaffold.controller;
 
 import com.codechen.scaffold.core.entity.Result;
-import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.request.SysMenuRequest;
 import com.codechen.scaffold.domain.vo.SysMenuVo;
 import com.codechen.scaffold.service.ISysMenuService;
@@ -36,7 +35,7 @@ public class SysMenuController {
     private ISysMenuService sysMenuService;
 
     @ApiOperation(value = "新增菜单")
-    @PostMapping("/add")
+    @PostMapping("/")
     public Result addMenu(@Validated @RequestBody SysMenuRequest sysMenuRequest) {
         sysMenuService.addMenu(sysMenuRequest);
 
@@ -44,7 +43,7 @@ public class SysMenuController {
     }
 
     @ApiOperation(value = "修改菜单")
-    @PutMapping("/")
+    @PutMapping("/{id}")
     public Result updateMenu(@PathVariable("id") Long id,
                              @Validated @RequestBody SysMenuRequest sysMenuRequest) {
         if (Objects.isNull(id)) {

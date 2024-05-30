@@ -81,8 +81,8 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "批量删除用户")
-    @DeleteMapping("/")
-    public Result batchDeleteUser(@RequestBody Long[] ids) {
+    @PostMapping("/batchDelete")
+        public Result batchDeleteUser(@RequestBody Long[] ids) {
         sysUserService.removeBatchByIds(Arrays.asList(ids));
         return Result.success(null);
     }

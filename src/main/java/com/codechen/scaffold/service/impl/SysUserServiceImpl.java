@@ -26,6 +26,7 @@ import com.codechen.scaffold.service.ISysRoleService;
 import com.codechen.scaffold.service.ISysUserRoleService;
 import com.codechen.scaffold.service.ISysUserService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,15 +75,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new BusinessException(ResultCodeEnum.SYS_USER_NOT_EXISTS);
         }
 
-        if (StringUtils.isNotBlank(sysUserRequest.getUsername()) && !sysUser.getUsername().equals(sysUserRequest.getUsername())) {
+        if (StringUtils.isNotBlank(sysUserRequest.getUsername())
+                && StringUtils.isNotBlank(sysUser.getUsername())
+                && !sysUser.getUsername().equals(sysUserRequest.getUsername())) {
             checkUniqueUsername(sysUserRequest.getUsername());
         }
 
-        if (StringUtils.isNotBlank(sysUserRequest.getPhone()) && !sysUser.getPhone().equals(sysUserRequest.getPhone())) {
+        if (StringUtils.isNotBlank(sysUserRequest.getPhone())
+                && StringUtils.isNotBlank(sysUser.getPhone())
+                && !sysUser.getPhone().equals(sysUserRequest.getPhone())) {
             checkUniquePhone(sysUserRequest.getPhone());
         }
 
-        if (StringUtils.isNotBlank(sysUserRequest.getEmail()) && !sysUser.getEmail().equals(sysUserRequest.getEmail())) {
+        if (StringUtils.isNotBlank(sysUserRequest.getEmail())
+                && StringUtils.isNotBlank(sysUser.getEmail())
+                && !sysUser.getEmail().equals(sysUserRequest.getEmail())) {
             checkUniqueEmail(sysUserRequest.getEmail());
         }
         BeanUtil.copy(sysUserRequest, sysUser);
@@ -119,11 +126,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         LambdaQueryWrapper<SysUser> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.like(StringUtils.isNotBlank(sysUserQueryRequest.getUsername()), SysUser::getUsername, sysUserQueryRequest.getUsername());
         queryWrapper.like(StringUtils.isNotBlank(sysUserQueryRequest.getName()), SysUser::getNickName, sysUserQueryRequest.getName());
+        queryWrapper.orderByDesc(SysUser::getCreateTime);
 
         Page<SysUser> page = page(sysUserPage, queryWrapper);
 
         Page<SysUserVo> sysUserVoPage = new Page<>();
-        BeanUtil.copy(page, sysUserVoPage);
+        // fixme 使用自研的 BeanUtil 有 bug
+//        BeanUtil.copy(page, sysUserVoPage);
+        BeanUtils.copyProperties(page, sysUserVoPage);
         return sysUserVoPage;
     }
 
