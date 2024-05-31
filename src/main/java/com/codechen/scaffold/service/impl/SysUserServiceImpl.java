@@ -1,5 +1,6 @@
 package com.codechen.scaffold.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -9,7 +10,6 @@ import com.codechen.scaffold.constant.CommonConstant;
 import com.codechen.scaffold.core.constant.CommonCodeEnum;
 import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import com.codechen.scaffold.core.exception.BusinessException;
-import com.codechen.scaffold.core.util.BeanUtil;
 import com.codechen.scaffold.core.util.ThreadLocalUtil;
 import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.entity.SysRole;
@@ -26,7 +26,6 @@ import com.codechen.scaffold.service.ISysRoleService;
 import com.codechen.scaffold.service.ISysUserRoleService;
 import com.codechen.scaffold.service.ISysUserService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +63,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         checkUniquePhone(sysUserRequest.getPhone());
 
         SysUser sysUser = new SysUser();
-        BeanUtil.copy(sysUser, sysUser);
+        BeanUtil.copyProperties(sysUser, sysUser);
         save(sysUser);
     }
 
@@ -92,7 +91,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 && !sysUser.getEmail().equals(sysUserRequest.getEmail())) {
             checkUniqueEmail(sysUserRequest.getEmail());
         }
-        BeanUtil.copy(sysUserRequest, sysUser);
+        BeanUtil.copyProperties(sysUserRequest, sysUser);
 
         updateById(sysUser);
     }
@@ -133,7 +132,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         Page<SysUserVo> sysUserVoPage = new Page<>();
         // fixme 使用自研的 BeanUtil 有 bug
 //        BeanUtil.copy(page, sysUserVoPage);
-        BeanUtils.copyProperties(page, sysUserVoPage);
+        BeanUtil.copyProperties(page, sysUserVoPage);
         return sysUserVoPage;
     }
 
@@ -169,8 +168,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (roleIds != null && roleIds.size() > 0) {
 
             List<SysRole> sysRoleList = sysRoleService.list(new LambdaQueryWrapper<SysRole>().in(SysRole::getId, roleIds));
-            List<SysRoleVo> sysRoleVoList = new ArrayList<>();
-            BeanUtil.copy(sysRoleList, sysRoleVoList);
+            List<SysRoleVo> sysRoleVoList = BeanUtil.copyToList(sysRoleList, SysRoleVo.class);
             return sysRoleVoList;
         } else {
             return new ArrayList<>();
@@ -201,7 +199,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (Objects.isNull(sysUser)) {
             throw new BusinessException(ResultCodeEnum.SYS_USER_NOT_EXISTS);
         }
-        BeanUtil.copy(sysUser, sysUserVo);
+        BeanUtil.copyProperties(sysUser, sysUserVo);
         List<SysRoleVo> sysRoleVoList = new ArrayList<>();
         List<SysMenuVo> sysMenuVoList = new ArrayList<>();
         List<SysMenu> sysMenuList = new ArrayList<>();
@@ -210,12 +208,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             List<SysRole> sysRoleList = sysRoleService.list();
             sysMenuList = sysMenuService.list(new LambdaQueryWrapper<SysMenu>().orderByAsc(SysMenu::getSort));
 
-            BeanUtil.copy(sysRoleList, sysRoleVoList);
-            BeanUtil.copy(sysMenuVoList, sysMenuVoList);
+            sysRoleVoList = BeanUtil.copyToList(sysRoleList, SysRoleVo.class);
+            sysMenuVoList = BeanUtil.copyToList(sysMenuVoList, SysMenuVo.class);
         } else {
             sysRoleVoList = getAssignedUserRole(sysUser.getId());
             sysMenuVoList = getAssignedMenu(sysUser.getId());
-            BeanUtil.copy(sysMenuVoList, sysMenuList);
+            sysMenuList = BeanUtil.copyToList(sysMenuVoList, SysMenu.class);
         }
 
         List<SysMenuVo> permissionMenus = sysMenuService.getPermissionMenus(sysMenuList);

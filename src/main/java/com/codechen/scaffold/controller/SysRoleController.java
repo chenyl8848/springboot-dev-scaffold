@@ -1,10 +1,10 @@
 package com.codechen.scaffold.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.core.entity.Result;
-import com.codechen.scaffold.core.util.BeanUtil;
 import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.request.SysRoleQueryRequest;
 import com.codechen.scaffold.domain.request.SysRoleRequest;
@@ -14,7 +14,6 @@ import com.codechen.scaffold.service.ISysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
-import org.assertj.core.util.Lists;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,14 +82,13 @@ public class SysRoleController {
 
     @ApiOperation(value = "角色列表")
     @PostMapping("list")
-    public Result list(@RequestBody SysRoleQueryRequest sysRoleQueryRequest) {
+    public Result<List<SysRoleVo>> list(@RequestBody SysRoleQueryRequest sysRoleQueryRequest) {
         List<SysRole> sysRoleList = sysRoleService.list(new LambdaQueryWrapper<SysRole>()
                 .like(StringUtils.isNotBlank(sysRoleQueryRequest.getRoleName()), SysRole::getRoleName, sysRoleQueryRequest.getRoleName())
                 .like(StringUtils.isNotBlank(sysRoleQueryRequest.getRoleCode()), SysRole::getRoleCode, sysRoleQueryRequest.getRoleCode())
                 .orderByDesc(SysRole::getCreateTime));
 
-        ArrayList<SysRoleVo> sysRoleVoList = Lists.newArrayList();
-        BeanUtil.copy(sysRoleList, sysRoleVoList);
+        List<SysRoleVo> sysRoleVoList = BeanUtil.copyToList(sysRoleList, SysRoleVo.class);
         return Result.success(sysRoleVoList);
     }
 
@@ -100,7 +97,7 @@ public class SysRoleController {
     public Result getById(@PathVariable(value = "id") Long id) {
         SysRole sysRole = sysRoleService.getById(id);
         SysRoleVo sysRoleVo = new SysRoleVo();
-        BeanUtil.copy(sysRole, sysRoleVo);
+        BeanUtil.copyProperties(sysRole, sysRoleVo);
         return Result.success(sysRoleVo);
     }
 

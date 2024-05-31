@@ -1,5 +1,6 @@
 package com.codechen.scaffold.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -7,7 +8,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.codechen.scaffold.constant.CommonConstant;
 import com.codechen.scaffold.core.constant.ResultCodeEnum;
 import com.codechen.scaffold.core.exception.BusinessException;
-import com.codechen.scaffold.core.util.BeanUtil;
 import com.codechen.scaffold.domain.entity.SysMenu;
 import com.codechen.scaffold.domain.request.SysMenuRequest;
 import com.codechen.scaffold.domain.vo.SysMenuVo;
@@ -35,7 +35,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         checkUniqueMenuCode(sysMenuRequest.getMenuCode());
 
         SysMenu sysMenu = new SysMenu();
-        BeanUtil.copy(sysMenuRequest, sysMenu);
+        BeanUtil.copyProperties(sysMenuRequest, sysMenu);
         save(sysMenu);
     }
 
@@ -50,7 +50,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             checkUniqueMenuCode(sysMenuRequest.getMenuCode());
         }
 
-        BeanUtil.copy(sysMenuRequest, sysMenu);
+        BeanUtil.copyProperties(sysMenuRequest, sysMenu);
 
         updateById(sysMenu);
     }
@@ -112,14 +112,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         for (SysMenu sysMenu : list) {
             if (!ids.contains(sysMenu.getPid())) {
                 SysMenuVo sysMenuVo = new SysMenuVo();
-                BeanUtil.copy(sysMenu, sysMenuVo);
+                BeanUtil.copyProperties(sysMenu, sysMenuVo);
                 resultList.add(sysMenuVo);
             }
         }
 
         for (SysMenuVo sysMenuVo : resultList) {
             List<SysMenu> sysMenuList = getChildrenMenu(sysMenuVo.getId(), list);
-            List<SysMenuVo> sysMenuVoList = BeanUtil.copyList(sysMenuList, SysMenuVo.class);
+            List<SysMenuVo> sysMenuVoList = BeanUtil.copyToList(sysMenuList, SysMenuVo.class);
             sysMenuVo.setChildren(sysMenuVoList);
         }
         return resultList;

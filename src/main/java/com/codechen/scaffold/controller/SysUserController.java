@@ -1,10 +1,9 @@
 package com.codechen.scaffold.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.core.entity.Result;
-import com.codechen.scaffold.core.util.BeanUtil;
-import com.codechen.scaffold.domain.entity.SysRole;
 import com.codechen.scaffold.domain.entity.SysUser;
 import com.codechen.scaffold.domain.request.SysUserQueryRequest;
 import com.codechen.scaffold.domain.request.SysUserRequest;
@@ -103,7 +102,7 @@ public class SysUserController {
     public Result getById(@PathVariable(value = "id") Long id) {
         SysUser sysUser = sysUserService.getById(id);
         SysUserVo sysUserVo = new SysUserVo();
-        BeanUtil.copy(sysUser, sysUserVo);
+        BeanUtil.copyProperties(sysUser, sysUserVo);
         return Result.success(sysUserVo);
     }
 
