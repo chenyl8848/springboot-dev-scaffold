@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * @description 文件接口实现类
  */
 @Service
-public class IFileServiceImpl implements IFileService {
+public class FileServiceImpl implements IFileService {
 
     private final Path path = Paths.get("E:\\file");
 
