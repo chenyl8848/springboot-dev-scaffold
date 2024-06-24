@@ -1,6 +1,7 @@
 package com.codechen.scaffold.controller;
 
 import com.codechen.scaffold.core.entity.Result;
+import com.codechen.scaffold.domain.request.QuartzJobDetailRequest;
 import com.codechen.scaffold.domain.request.QuartzJobRequest;
 import com.codechen.scaffold.domain.vo.QuartzJobVo;
 import com.codechen.scaffold.service.IQuartzJobService;
@@ -41,28 +42,28 @@ public class QuartzJobController {
 
     @PutMapping("/")
     @ApiOperation(value = "修改任务")
-    public Result updateJob(@Validated @RequestBody QuartzJobRequest request) {
+    public Result updateJob(@Validated @RequestBody QuartzJobRequest request) throws SchedulerException {
         quartzJobService.updateJob(request);
         return Result.success(null);
     }
 
     @DeleteMapping("/")
     @ApiOperation(value = "删除任务")
-    public Result deleteJob(@Validated @RequestBody QuartzJobRequest request) {
+    public Result deleteJob(@Validated @RequestBody QuartzJobDetailRequest request) throws SchedulerException {
         quartzJobService.deleteJob(request);
         return Result.success(null);
     }
 
     @PostMapping("/pause")
     @ApiOperation(value = "暂停任务")
-    public Result pauseJob(@Validated @RequestBody QuartzJobRequest request) {
+    public Result pauseJob(@Validated @RequestBody QuartzJobDetailRequest request) throws SchedulerException {
         quartzJobService.pauseJob(request);
         return Result.success(null);
     }
 
     @PostMapping("/resume")
     @ApiOperation(value = "恢复任务")
-    public Result resumeJob(@Validated @RequestBody QuartzJobRequest request) {
+    public Result resumeJob(@Validated @RequestBody QuartzJobDetailRequest request) throws SchedulerException {
         quartzJobService.resumeJob(request);
         return Result.success(null);
     }
@@ -76,7 +77,7 @@ public class QuartzJobController {
 
     @PostMapping("/jobDetail")
     @ApiOperation(value = "任务详情")
-    public Result<QuartzJobVo> jobDetail(@Validated @RequestBody QuartzJobRequest request) throws SchedulerException {
+    public Result<QuartzJobVo> jobDetail(@Validated @RequestBody QuartzJobDetailRequest request) throws SchedulerException {
         QuartzJobVo quartzJobVo = quartzJobService.jobDetail(request);
         return Result.success(quartzJobVo);
     }

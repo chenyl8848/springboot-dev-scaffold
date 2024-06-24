@@ -17,11 +17,11 @@ import java.util.Map;
 public class QuartzJobRequest {
 
     @ApiModelProperty(value = "任务类路径", required = true)
-    @NotBlank(message = "任务类不能为空")
+    @NotBlank(message = "任务类路径不能为空")
     private String jobClazz;
 
-    @ApiModelProperty(value = "任务类名", required = true)
-    @NotBlank(message = "任务类名不能为空")
+    @ApiModelProperty(value = "任务名称", required = true)
+    @NotBlank(message = "任务名称不能为空")
     private String jobName;
 
     @ApiModelProperty(value = "任务组名")

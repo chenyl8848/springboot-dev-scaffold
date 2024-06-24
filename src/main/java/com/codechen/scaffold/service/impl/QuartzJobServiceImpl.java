@@ -1,6 +1,7 @@
 package com.codechen.scaffold.service.impl;
 
 import com.codechen.scaffold.core.exception.GlobalException;
+import com.codechen.scaffold.domain.request.QuartzJobDetailRequest;
 import com.codechen.scaffold.domain.request.QuartzJobRequest;
 import com.codechen.scaffold.domain.vo.QuartzJobTriggerVo;
 import com.codechen.scaffold.domain.vo.QuartzJobVo;
@@ -103,6 +104,7 @@ public class QuartzJobServiceImpl implements IQuartzJobService {
         String jobName = request.getJobName();
         String jobGroup = request.getJobGroup();
         String cron = request.getCron();
+        String description = request.getDescription();
 
         JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
         String triggerId = jobKey.getName() + jobKey.getGroup();
@@ -115,14 +117,14 @@ public class QuartzJobServiceImpl implements IQuartzJobService {
         CronTrigger trigger = TriggerBuilder.newTrigger()
                 .withSchedule(scheduleBuilder)
                 .withIdentity(triggerId)
+                .withDescription(description)
                 .build();
 
         scheduler.rescheduleJob(triggerKey, trigger);
-
     }
 
     @Override
-    public void deleteJob(QuartzJobRequest request) throws SchedulerException {
+    public void deleteJob(QuartzJobDetailRequest request) throws SchedulerException {
         String jobName = request.getJobName();
         String jobGroup = request.getJobGroup();
 
@@ -136,7 +138,7 @@ public class QuartzJobServiceImpl implements IQuartzJobService {
     }
 
     @Override
-    public void pauseJob(QuartzJobRequest request) throws SchedulerException {
+    public void pauseJob(QuartzJobDetailRequest request) throws SchedulerException {
         String jobName = request.getJobName();
         String jobGroup = request.getJobGroup();
 
@@ -149,7 +151,7 @@ public class QuartzJobServiceImpl implements IQuartzJobService {
     }
 
     @Override
-    public void resumeJob(QuartzJobRequest request) throws SchedulerException {
+    public void resumeJob(QuartzJobDetailRequest request) throws SchedulerException {
         String jobName = request.getJobName();
         String jobGroup = request.getJobGroup();
 
@@ -162,7 +164,7 @@ public class QuartzJobServiceImpl implements IQuartzJobService {
     }
 
     @Override
-    public QuartzJobVo jobDetail(QuartzJobRequest request) throws SchedulerException {
+    public QuartzJobVo jobDetail(QuartzJobDetailRequest request) throws SchedulerException {
         String jobName = request.getJobName();
         String jobGroup = request.getJobGroup();
 
