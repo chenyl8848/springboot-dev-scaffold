@@ -2,20 +2,25 @@
 
 > 封装开发中常用的 `SpringBoot` 集成。
 > 
-> 配套前端：https://github.com/chenyl8848/vue3-admin-template
+> 配套前端：[Vue3 后台管理模板](https://github.com/chenyl8848/vue3-admin-template)
 
 ## 目录
 
-- [x] [项目环境](#项目环境)
-- [ ] [集成 `Swagger`](#集成-swagger)
-- [ ] [集成 `MyBatis Plus`](#集成-mybatisplus)
+- [x] [集成 Swagger](#集成-swagger)
+- [x] [集成 MyBatis Plus](#集成-mybatisplus)
+- [ ] [登录鉴权](#登录鉴权)
+- [ ] [幂等性](#幂等性)
+- [ ] [参数校验](#参数校验)
+- [ ] [全局异常](#全局异常)
 - [ ] [多数据源](#多数据源)
-
-
-- [集成 Swagger](#集成-swagger)
-- [集成 `MyBatis Plus`](#集成-mybatis-plus)
-
-## 项目环境
+- [ ] [参数加解密](#参数加解密)
+- [ ] [上传下载](#上传下载)
+- [ ] [日志处理](#日志处理)
+- [ ] [本地缓存](#本地缓存)
+- [ ] [定时任务](#定时任务)
+- [ ] [代码生成](#代码生成)
+- [ ] [常用工具类](#常用工具类)
+- [ ] [性能监控](#性能监控)
 
 ## 集成 Swagger
 
@@ -83,7 +88,8 @@ public class SwaggerConfig {
 }
 ```
 
-## 集成 `MyBatis Plus`
+## 集成 MyBatisPlus
+
 ### 依赖
 ```xml
 <dependency>
@@ -140,43 +146,29 @@ public class MyBatisPlusConfig {
 }
 ```
 
-## 跨域处理
-
 ## 登录鉴权
 
 ## 防护 `XSS`、`SQL` 注入攻击
 
-## 幂等性处理
+## 幂等性
 
 ## 参数校验
 
-## 全局异常处理
+## 全局异常
 
 ## 多数据源
 
 ## 参数加解密
 
-## 数据脱敏
-
-## 文件上传下载
+## 上传下载
 
 ## 日志处理
-
-## 集成 `Redis`
-
-## 集成 `Spring Cache`
-
-## 分布式锁
-
-## 集成 `POI`
-
-## 导入导出
 
 ## 本地缓存
 
 ## 定时任务
 
-## 代码自动生成
+## 代码生成
 
 ## 常用工具类
 
