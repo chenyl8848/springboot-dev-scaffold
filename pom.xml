@@ -6,7 +6,15 @@
 
     <groupId>com.codechen</groupId>
     <artifactId>springboot-dev-scaffold</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <version>${revision}</version>
+    <modules>
+        <module>scaffold-common</module>
+        <module>scaffold-framework</module>
+        <module>scaffold-admin</module>
+        <module>scaffold-generator</module>
+        <module>scaffold-job</module>
+    </modules>
 
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -17,6 +25,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <revision>1.0.0</revision>
         <swagger.version>2.9.2</swagger.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
         <knife4j.version>3.0.3</knife4j.version>
@@ -25,7 +34,7 @@
         <mybaits-plus.version>3.5.2</mybaits-plus.version>
         <mybaits-plus-ui.version>2.0.1</mybaits-plus-ui.version>
         <huttool.version>5.8.10</huttool.version>
-        <fastjson.version>1.2.83</fastjson.version>
+        <fastjson2.version>2.0.40</fastjson2.version>
         <guava.version>31.1-jre</guava.version>
         <documents4j-local.version>1.0.3</documents4j-local.version>
         <documents4j-transformer-msoffice-word.version>1.0.3</documents4j-transformer-msoffice-word.version>
@@ -41,210 +50,333 @@
         <dozer-core.version>6.5.2</dozer-core.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.retry</groupId>
+                <artifactId>spring-retry</artifactId>
+                <version>${spring-retry.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybaits-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${java-jwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.lionsoul</groupId>
+                <artifactId>ip2region</artifactId>
+                <version>${ip2region.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${huttool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.dozermapper</groupId>
+                <artifactId>dozer-core</artifactId>
+                <version>${dozer-core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <!-- 使用 documents4j 操作 pdf 开始 -->
+            <!-- pdf文档生成 -->
+            <dependency>
+                <groupId>com.documents4j</groupId>
+                <artifactId>documents4j-local</artifactId>
+                <version>${documents4j-local.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.documents4j</groupId>
+                <artifactId>documents4j-transformer-msoffice-word</artifactId>
+                <version>${documents4j-transformer-msoffice-word.version}</version>
+            </dependency>
+
+            <!-- itext对pdf文档操作 -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>itextpdf</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>itext-asian</artifactId>
+                <version>${itext-asian.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk15on</artifactId>
+                <version>${bcpkix-jdk15on.version}</version>
+            </dependency>
+            <!-- 使用 documents4j 操作 pdf 结束 -->
+
+            <!-- 使用 poi 操作 word 开始 -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi-ooxml.version}</version>
+            </dependency>
+            <!-- 使用 poi 操作 word 结束 -->
+
+            <dependency>
+                <groupId>org.ofdrw</groupId>
+                <artifactId>ofdrw-converter</artifactId>
+                <version>${ofdrw-converter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cloud.tianai.captcha</groupId>
+                <artifactId>tianai-captcha-springboot-starter</artifactId>
+                <version>${tianai-captcha.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-web</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-validation</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-configuration-processor</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-test</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-aop</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-quartz</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-quartz</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-cache</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.retry</groupId>
-            <artifactId>spring-retry</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.retry</groupId>-->
+        <!--            <artifactId>spring-retry</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>mysql</groupId>-->
+        <!--            <artifactId>mysql-connector-java</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${druid.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba</groupId>-->
+        <!--            <artifactId>druid-spring-boot-starter</artifactId>-->
+        <!--            <version>${druid.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybaits-plus.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.baomidou</groupId>-->
+        <!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
+        <!--            <version>${mybaits-plus.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.github.davidfantasy</groupId>
-            <artifactId>mybatis-plus-generator-ui</artifactId>
-            <version>${mybaits-plus-ui.version}</version>
-            <scope>test</scope>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.davidfantasy</groupId>-->
+        <!--            <artifactId>mybatis-plus-generator-ui</artifactId>-->
+        <!--            <version>${mybaits-plus-ui.version}</version>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.projectlombok</groupId>-->
+        <!--            <artifactId>lombok</artifactId>-->
+        <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger2</artifactId>-->
-<!--            <version>${swagger.version}</version>-->
-<!--        </dependency>-->
+        <!--&lt;!&ndash;        <dependency>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <groupId>io.springfox</groupId>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <artifactId>springfox-swagger2</artifactId>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <version>${swagger.version}</version>&ndash;&gt;-->
+        <!--&lt;!&ndash;        </dependency>&ndash;&gt;-->
 
-        <!-- ip:port/doc.html 的 swagger ui -->
-<!--        <dependency>-->
-<!--            <groupId>com.github.xiaoymin</groupId>-->
-<!--            <artifactId>swagger-bootstrap-ui</artifactId>-->
-<!--            <version>${swagger-bootstrap-ui.version}</version>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash; ip:port/doc.html 的 swagger ui &ndash;&gt;-->
+        <!--&lt;!&ndash;        <dependency>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <groupId>com.github.xiaoymin</groupId>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <artifactId>swagger-bootstrap-ui</artifactId>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <version>${swagger-bootstrap-ui.version}</version>&ndash;&gt;-->
+        <!--&lt;!&ndash;        </dependency>&ndash;&gt;-->
 
-        <!-- ip:port/swagger-ui.html 的 swagger ui -->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger-ui</artifactId>-->
-<!--            <version>${springfox-swagger-ui.version}</version>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash; ip:port/swagger-ui.html 的 swagger ui &ndash;&gt;-->
+        <!--&lt;!&ndash;        <dependency>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <groupId>io.springfox</groupId>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <artifactId>springfox-swagger-ui</artifactId>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <version>${springfox-swagger-ui.version}</version>&ndash;&gt;-->
+        <!--&lt;!&ndash;        </dependency>&ndash;&gt;-->
 
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>${knife4j.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.xiaoymin</groupId>-->
+        <!--            <artifactId>knife4j-spring-boot-starter</artifactId>-->
+        <!--            <version>${knife4j.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.commons</groupId>-->
+        <!--            <artifactId>commons-lang3</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>javax.validation</groupId>-->
+        <!--            <artifactId>validation-api</artifactId>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${huttool.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>cn.hutool</groupId>-->
+        <!--            <artifactId>hutool-all</artifactId>-->
+        <!--            <version>${huttool.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba</groupId>-->
+        <!--            <artifactId>fastjson</artifactId>-->
+        <!--            <version>${fastjson.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.google.guava</groupId>-->
+        <!--            <artifactId>guava</artifactId>-->
+        <!--            <version>${guava.version}</version>-->
+        <!--        </dependency>-->
 
-        <!-- 使用 documents4j 操作 pdf 开始 -->
-        <!-- pdf文档生成 -->
-        <dependency>
-            <groupId>com.documents4j</groupId>
-            <artifactId>documents4j-local</artifactId>
-            <version>${documents4j-local.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.documents4j</groupId>
-            <artifactId>documents4j-transformer-msoffice-word</artifactId>
-            <version>${documents4j-transformer-msoffice-word.version}</version>
-        </dependency>
+        <!--        &lt;!&ndash; 使用 documents4j 操作 pdf 开始 &ndash;&gt;-->
+        <!--        &lt;!&ndash; pdf文档生成 &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.documents4j</groupId>-->
+        <!--            <artifactId>documents4j-local</artifactId>-->
+        <!--            <version>${documents4j-local.version}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.documents4j</groupId>-->
+        <!--            <artifactId>documents4j-transformer-msoffice-word</artifactId>-->
+        <!--            <version>${documents4j-transformer-msoffice-word.version}</version>-->
+        <!--        </dependency>-->
 
-        <!-- itext对pdf文档操作 -->
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>${itextpdf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itext-asian</artifactId>
-            <version>${itext-asian.version}</version>
-        </dependency>
+        <!--        &lt;!&ndash; itext对pdf文档操作 &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.itextpdf</groupId>-->
+        <!--            <artifactId>itextpdf</artifactId>-->
+        <!--            <version>${itextpdf.version}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.itextpdf</groupId>-->
+        <!--            <artifactId>itext-asian</artifactId>-->
+        <!--            <version>${itext-asian.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcpkix-jdk15on</artifactId>
-            <version>${bcpkix-jdk15on.version}</version>
-        </dependency>
-        <!-- 使用 documents4j 操作 pdf 结束 -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.bouncycastle</groupId>-->
+        <!--            <artifactId>bcpkix-jdk15on</artifactId>-->
+        <!--            <version>${bcpkix-jdk15on.version}</version>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; 使用 documents4j 操作 pdf 结束 &ndash;&gt;-->
 
-        <!-- 使用 poi 操作 word 开始 -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>${poi.version}</version>
-        </dependency>
+        <!--        &lt;!&ndash; 使用 poi 操作 word 开始 &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.poi</groupId>-->
+        <!--            <artifactId>poi</artifactId>-->
+        <!--            <version>${poi.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>${poi-ooxml.version}</version>
-        </dependency>
-        <!-- 使用 poi 操作 word 结束 -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.poi</groupId>-->
+        <!--            <artifactId>poi-ooxml</artifactId>-->
+        <!--            <version>${poi-ooxml.version}</version>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; 使用 poi 操作 word 结束 &ndash;&gt;-->
 
-        <dependency>
-            <groupId>org.ofdrw</groupId>
-            <artifactId>ofdrw-converter</artifactId>
-            <version>${ofdrw-converter.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.ofdrw</groupId>-->
+        <!--            <artifactId>ofdrw-converter</artifactId>-->
+        <!--            <version>${ofdrw-converter.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>${java-jwt.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.auth0</groupId>-->
+        <!--            <artifactId>java-jwt</artifactId>-->
+        <!--            <version>${java-jwt.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>cloud.tianai.captcha</groupId>
-            <artifactId>tianai-captcha-springboot-starter</artifactId>
-            <version>${tianai-captcha.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>cloud.tianai.captcha</groupId>-->
+        <!--            <artifactId>tianai-captcha-springboot-starter</artifactId>-->
+        <!--            <version>${tianai-captcha.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.lionsoul</groupId>
-            <artifactId>ip2region</artifactId>
-            <version>${ip2region.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.lionsoul</groupId>-->
+        <!--            <artifactId>ip2region</artifactId>-->
+        <!--            <version>${ip2region.version}</version>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.github.dozermapper</groupId>
-            <artifactId>dozer-core</artifactId>
-            <version>${dozer-core.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.dozermapper</groupId>-->
+        <!--            <artifactId>dozer-core</artifactId>-->
+        <!--            <version>${dozer-core.version}</version>-->
+        <!--        </dependency>-->
     </dependencies>
 
 </project>

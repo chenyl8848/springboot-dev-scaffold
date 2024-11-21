@@ -1,0 +1,54 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codechen.scaffold.generator.mapper.DataSourceMapper">
+
+    <resultMap type="com.codechen.scaffold.generator.domain.entity.TableInfo" id="TableInfoMap">
+        <result property="tableName" column="table_name"  />
+        <result property="tableComment" column="table_comment"  />
+    </resultMap>
+
+    <resultMap type="com.codechen.scaffold.generator.domain.entity.FieldInfo" id="FieldMapInfo">
+        <result property="columnName" column="column_name"></result>
+        <result property="dataType" column="data_type"></result>
+        <result property="columnType" column="column_type"></result>
+        <result property="filedComment" column="column_comment"></result>
+        <result property="isPk" column="is_pk"></result>
+    </resultMap>
+
+    <select id="queryTableList" resultMap="TableInfoMap">
+        select
+            t.TABLE_NAME, t.table_comment
+        from
+            information_schema.TABLES t
+        WHERE
+            t.TABLE_SCHEMA = (SELECT DATABASE())
+    </select>
+
+    <select id="queryTableInfo" resultMap="TableInfoMap">
+        select
+            t.TABLE_NAME, t.table_comment
+        from
+            information_schema.TABLES t
+        WHERE
+            t.TABLE_SCHEMA = (SELECT DATABASE())
+            <if test="tableName != null and tableName != ''">
+                and t.TABLE_NAME = #{tableName};
+            </if>
+    </select>
+
+    <select id="queryFieldList" resultMap="FieldMapInfo">
+        select
+            t.COLUMN_NAME,
+            t.COLUMN_COMMENT,
+            t.DATA_TYPE,
+            t.COLUMN_TYPE,
+            (case  when t.COLUMN_KEY = 'PRI' then 1 else 0 end) as is_pk
+        from
+            information_schema.COLUMNS t
+        where
+            t.TABLE_SCHEMA = (select DATABASE())
+            <if test="tableName != null and tableName != ''">
+                and t.TABLE_NAME = #{tableName};
+            </if>
+    </select>
+
+</mapper>

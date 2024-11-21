@@ -1,0 +1,23 @@
+table {
+    /* 移除表格内边框间的间隙 */
+    border-collapse: collapse;
+}
+
+table, th, td {
+    /* 设置表格、表头和单元格的边框 */
+    border: 1px solid black;
+}
+
+button {
+    /* 清除button默认背景 */
+    background-color: transparent;
+    font-size: 16px;
+    color: #6078FF;
+    border: none;
+    cursor: pointer;
+}
+
+button::after {
+    /* 清除button默认边框 */
+    border: none;
+}
