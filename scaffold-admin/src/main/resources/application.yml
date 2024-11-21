@@ -2,7 +2,7 @@ spring:
   application:
     name: dev-scaffold
   profiles:
-    active: dev
+    active: @environment@
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
