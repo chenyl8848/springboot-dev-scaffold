@@ -12,6 +12,10 @@ import com.codechen.scaffold.admin.service.ISysUserService;
 import com.codechen.scaffold.common.domain.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,16 +39,27 @@ import java.util.Objects;
 @Api(tags = "用户管理")
 @RestController
 @RequestMapping("/sysuser")
+@Slf4j
 public class SysUserController {
 
     @Resource
     private ISysUserService sysUserService;
 
+    @Resource
+    private ThreadPoolTaskExecutor taskExecutor;
+
     @ApiOperation(value = "获取用户信息")
     @GetMapping("/info")
     public Result<SysUserVo> getUserInfo() {
-
+        log.info("获取用户信息......开始");
         SysUserVo sysUserVo = sysUserService.getUserInfo();
+        log.info("获取用户信息......结束");
+
+        taskExecutor.submit(() -> {
+            log.info("获取用户信息......结束 {}", Thread.currentThread().getName());
+        });
+
+        int i = 10 / 0;
 
         return Result.success(sysUserVo);
     }

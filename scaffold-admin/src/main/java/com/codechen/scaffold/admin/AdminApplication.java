@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author：Java陈序员
@@ -15,6 +17,8 @@ import org.springframework.retry.annotation.EnableRetry;
 @EnableRetry
 // 开启缓存
 @EnableCaching
+// 开启定时异步任务
+@EnableScheduling
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.codechen.scaffold"})
 public class AdminApplication {

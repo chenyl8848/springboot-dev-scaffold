@@ -32,4 +32,7 @@ public interface CommonConstant {
 
     /** 管理员用户名 */
     String ADMIN_USER_NAME = "admin";
+
+    /** JSON 请求格式 */
+    String APPLICATION_JSON = "application/json";
 }

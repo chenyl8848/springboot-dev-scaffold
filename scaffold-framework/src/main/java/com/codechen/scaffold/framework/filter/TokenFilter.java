@@ -1,6 +1,7 @@
 package com.codechen.scaffold.framework.filter;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
@@ -9,26 +10,35 @@ import com.codechen.scaffold.common.domain.Result;
 import com.codechen.scaffold.common.domain.UserInfo;
 import com.codechen.scaffold.common.enums.ResultCodeEnum;
 import com.codechen.scaffold.common.holder.UserInfoHolder;
+import com.codechen.scaffold.framework.wrapper.ByteArrayServletInputStream;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author：Java陈序员
  * @date：2024-10-29 15:57
  * @description：Token 过滤器
  */
+@Slf4j
 public class TokenFilter implements Filter {
 
     /** 请求白名单 */
@@ -55,8 +65,46 @@ public class TokenFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        // 获取请求地址
-        String requestURI = request.getServletPath();
+        // 请求地址
+        String requestURI = request.getRequestURI();
+        // 请求方式
+        String method = request.getMethod();
+        // 请求类型
+        String contentType = request.getContentType();
+        // 请求参数
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        // 请求路径参数
+        String pathParameterString = "";
+        // 请求体参数
+        String bodyParameterString = "";
+
+        ServletRequest requestWrapper = null;
+        if (CommonConstant.APPLICATION_JSON.equals(contentType)) {
+            bodyParameterString = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bodyParameterString.getBytes(StandardCharsets.UTF_8));
+            request = new HttpServletRequestWrapper(request) {
+                @Override
+                public ServletInputStream getInputStream() throws IOException {
+                    return new ByteArrayServletInputStream(byteArrayInputStream);
+                }
+            };
+        }
+
+        if (!parameterMap.isEmpty()) {
+            JSONObject jsonObject = new JSONObject();
+            parameterMap.keySet().stream().forEach(item -> {
+                jsonObject.put(item, parameterMap.get(item)[0]);
+            });
+
+            pathParameterString = jsonObject.toJSONString();
+
+        }
+
+        log.info("请求地址【{}】==>请求方式【{}】==>请求路径参数【{}】==>请求体参数【{}】", requestURI,
+                method,
+                pathParameterString,
+                bodyParameterString);
+
         if (isExcludeURI(requestURI)) {
             filterChain.doFilter(request, response);
             return;

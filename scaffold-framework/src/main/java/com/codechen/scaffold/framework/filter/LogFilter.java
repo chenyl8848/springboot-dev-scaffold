@@ -1,7 +1,7 @@
 package com.codechen.scaffold.framework.filter;
 
 import com.codechen.scaffold.common.constant.CommonConstant;
-import com.codechen.scaffold.common.util.SnowflakeIdUtil;
+import com.codechen.scaffold.common.util.ThreadMdcUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 
@@ -25,8 +25,7 @@ public class LogFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String traceId = request.getHeader(CommonConstant.TRACE_ID_KEY);
         if (StringUtils.isBlank(traceId)) {
-            SnowflakeIdUtil snowflakeIdUtil = new SnowflakeIdUtil(0, 0);
-            traceId = snowflakeIdUtil.nextId() + "";
+            traceId = ThreadMdcUtil.generateTraceId();
         }
         MDC.put(CommonConstant.TRACE_ID_KEY, traceId);
         filterChain.doFilter(servletRequest, servletResponse);
