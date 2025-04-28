@@ -67,6 +67,12 @@ codechen:
     token-secret: "拳打南山敬老院，脚踢北海幼儿园"
     token-expired-time: 3600000
     exclude-urls: "/doc.html,/webjars/*,/swagger-resources,/v2/api-docs,/login/*"
+  executor:
+    core-pool-size: 16
+    max-pool-size: 32
+    queue-capacity: 200
+    keep-alive: 60
+    thread-prefix-name: code-chen-
   generator:
     package-name: com.codechen.scaffold.admin
 #    ignore-table-prefix: true

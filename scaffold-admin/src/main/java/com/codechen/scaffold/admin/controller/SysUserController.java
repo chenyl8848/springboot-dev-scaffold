@@ -39,28 +39,15 @@ import java.util.Objects;
 @Api(tags = "用户管理")
 @RestController
 @RequestMapping("/sysuser")
-@Slf4j
 public class SysUserController {
 
     @Resource
     private ISysUserService sysUserService;
 
-    @Resource
-    private ThreadPoolTaskExecutor taskExecutor;
-
     @ApiOperation(value = "获取用户信息")
     @GetMapping("/info")
     public Result<SysUserVo> getUserInfo() {
-        log.info("获取用户信息......开始");
         SysUserVo sysUserVo = sysUserService.getUserInfo();
-        log.info("获取用户信息......结束");
-
-        taskExecutor.submit(() -> {
-            log.info("获取用户信息......结束 {}", Thread.currentThread().getName());
-        });
-
-        int i = 10 / 0;
-
         return Result.success(sysUserVo);
     }
 

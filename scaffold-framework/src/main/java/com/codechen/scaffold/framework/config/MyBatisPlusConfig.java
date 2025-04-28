@@ -53,7 +53,7 @@ public class MyBatisPlusConfig {
             public void insertFill(MetaObject metaObject) {
                 this.setFieldValByName("createTime", LocalDateTime.now(), metaObject);
                 this.setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
-                this.setFieldValByName("deleted", CommonCodeEnum.NORMAL.getCode(), metaObject);
+                this.setFieldValByName("deleted", Integer.valueOf(CommonCodeEnum.NORMAL.getCode()), metaObject);
                 this.setFieldValByName("version", 1, metaObject);
             }
 
