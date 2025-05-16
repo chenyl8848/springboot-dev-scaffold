@@ -22,11 +22,9 @@ import com.codechen.scaffold.admin.service.ISysUserRoleService;
 import com.codechen.scaffold.admin.service.ISysUserService;
 import com.codechen.scaffold.common.constant.CommonConstant;
 import com.codechen.scaffold.common.domain.UserInfo;
-import com.codechen.scaffold.common.enums.CommonCodeEnum;
 import com.codechen.scaffold.common.enums.ResultCodeEnum;
 import com.codechen.scaffold.common.exception.BusinessException;
 import com.codechen.scaffold.common.holder.UserInfoHolder;
-import com.codechen.scaffold.common.util.ThreadLocalUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -126,7 +124,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public IPage<SysUserVo> queryList(Page<SysUser> sysUserPage, SysUserQueryRequest sysUserQueryRequest) {
         LambdaQueryWrapper<SysUser> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.like(StringUtils.isNotBlank(sysUserQueryRequest.getUsername()), SysUser::getUsername, sysUserQueryRequest.getUsername());
-        queryWrapper.like(StringUtils.isNotBlank(sysUserQueryRequest.getName()), SysUser::getNickName, sysUserQueryRequest.getName());
+        queryWrapper.like(StringUtils.isNotBlank(sysUserQueryRequest.getNickName()), SysUser::getNickName, sysUserQueryRequest.getNickName());
         queryWrapper.orderByDesc(SysUser::getCreateTime);
 
         Page<SysUser> page = page(sysUserPage, queryWrapper);

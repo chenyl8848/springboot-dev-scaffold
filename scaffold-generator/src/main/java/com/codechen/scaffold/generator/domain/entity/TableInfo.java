@@ -17,7 +17,7 @@ public class TableInfo {
     /** 表名 */
     private String tableName;
 
-    /** 表说明 */
+    /** 表注释 */
     private String tableComment;
 
     /** 类名 */

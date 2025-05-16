@@ -23,6 +23,18 @@
             t.TABLE_SCHEMA = (SELECT DATABASE())
     </select>
 
+    <select id="queryTablePageList" resultMap="TableInfoMap">
+        select
+            t.TABLE_NAME, t.table_comment
+        from
+            information_schema.TABLES t
+        WHERE
+            t.TABLE_SCHEMA = (SELECT DATABASE())
+            <if test="tableName != null and tableName != ''">
+               AND t.TABLE_NAME like concat('%', #{tableName}, '%')
+            </if>
+    </select>
+
     <select id="queryTableInfo" resultMap="TableInfoMap">
         select
             t.TABLE_NAME, t.table_comment

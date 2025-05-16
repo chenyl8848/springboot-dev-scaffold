@@ -7,7 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author：Java陈序员
+ * @author：Java陈序员i
  * @date 2023-06-15 17:12
  * @description 系统用户查询 vo
  */
@@ -21,5 +21,5 @@ public class SysUserQueryRequest implements Serializable {
     private String username;
 
     @ApiModelProperty(value = "昵称")
-    private String name;
+    private String nickName;
 }

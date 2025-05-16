@@ -1,5 +1,10 @@
 package com.codechen.scaffold.generator.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.common.exception.GlobalException;
 import com.codechen.scaffold.generator.config.GeneratorConfig;
 import com.codechen.scaffold.generator.domain.entity.FieldInfo;
@@ -38,6 +43,18 @@ public class DataSourceServiceImpl implements IDataSourceService {
                 generatorConfig.getIgnoreTablePrefix(),
                 generatorConfig.getTablePrefix())));
         return list;
+    }
+
+    @Override
+    public IPage<TableInfo> tableInfoPageList(Page<TableInfo> tableInfoPage, String tableName) {
+        Page<TableInfo> page = dataSourceMapper.queryTablePageList(tableInfoPage, tableName);
+
+        page.getRecords().forEach(item -> {
+            item.setClassName(GeneratorUtil.convertClassName(item.getTableName(),
+                    generatorConfig.getIgnoreTablePrefix(),
+                    generatorConfig.getTablePrefix()));
+        });
+        return page;
     }
 
     @Override

@@ -1,11 +1,14 @@
 package com.codechen.scaffold.generator.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.common.domain.Result;
 import com.codechen.scaffold.common.enums.ResultCodeEnum;
 import com.codechen.scaffold.generator.domain.entity.FieldInfo;
 import com.codechen.scaffold.generator.domain.entity.TableInfo;
 import com.codechen.scaffold.generator.domain.request.BatchGenerateCodeRequest;
 import com.codechen.scaffold.generator.domain.request.GenerateCodeRequest;
+import com.codechen.scaffold.generator.domain.request.TableInfoQueryRequest;
 import com.codechen.scaffold.generator.domain.vo.PreviewCodeVo;
 import com.codechen.scaffold.generator.service.IDataSourceService;
 import com.codechen.scaffold.generator.service.IGeneratorService;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +51,19 @@ public class GeneratorController {
         List<TableInfo> tableInfoList = dataSourceService.tableInfoList();
 
         return Result.success(tableInfoList);
+    }
+
+    @ApiOperation(value = "数据库表分页信息")
+    @PostMapping("/tableInfoPageList/{pageNo}/{pageSize}")
+    public Result<IPage<TableInfo>> tableInfoPageList(@PathVariable(value = "pageNo") Long pageNo,
+                                                      @PathVariable(value = "pageSize") Long pageSize,
+                                                      @RequestBody TableInfoQueryRequest request) {
+
+        Page<TableInfo> tableInfoPage = new Page<>(pageNo, pageSize);
+
+        IPage<TableInfo> tableInfoIPage = dataSourceService.tableInfoPageList(tableInfoPage, request.getTableName());
+
+        return Result.success(tableInfoIPage);
     }
 
     @ApiOperation(value = "数据表信息")

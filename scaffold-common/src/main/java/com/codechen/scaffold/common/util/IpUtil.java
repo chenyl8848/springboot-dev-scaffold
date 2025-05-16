@@ -81,9 +81,10 @@ public class IpUtil {
         }
 
         // 对于通过多个代理的情况，第一个 IP 为客户端真实 IP,多个 IP 按照','分割
-        if (ip != null && ip.length() > 15) {
-            if (ip.indexOf(",") > 15) {
-                ip = ip.substring(0, ip.indexOf(","));
+        if (ip.indexOf(",") > 0) {
+            String[] ips = ip.split(",");
+            if (ips.length > 0) {
+                ip = ips[0];
             }
         }
 
@@ -93,7 +94,7 @@ public class IpUtil {
     /**
      * 获取 mac 地址
      *
-     * @return
+     * @returnf
      * @throws Exception
      */
     public static String getMacAddress() throws Exception {

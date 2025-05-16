@@ -11,6 +11,10 @@ spring:
     username: moredoc
     password: moredoc@1024
 
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 codechen:
   generator:
     package-name: com.codechen.scaffold.admin

@@ -1,5 +1,6 @@
 package com.codechen.scaffold.generator.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.generator.domain.entity.FieldInfo;
 import com.codechen.scaffold.generator.domain.entity.TableInfo;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,7 +18,10 @@ public interface DataSourceMapper {
 
     List<TableInfo> queryTableList();
 
+    Page<TableInfo> queryTablePageList(@Param("page") Page<TableInfo> page, @Param("tableName") String tableName);
+
     TableInfo queryTableInfo(@Param("tableName") String tableName);
 
     List<FieldInfo> queryFieldList(@Param("tableName") String tableName);
+
 }

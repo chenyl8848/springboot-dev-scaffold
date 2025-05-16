@@ -1,5 +1,7 @@
 package com.codechen.scaffold.admin.controller;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.codechen.scaffold.admin.domain.entity.SysMenu;
 import com.codechen.scaffold.admin.domain.request.SysMenuRequest;
 import com.codechen.scaffold.admin.domain.vo.SysMenuVo;
 import com.codechen.scaffold.admin.service.ISysMenuService;
@@ -63,7 +65,7 @@ public class SysMenuController {
     }
 
     @ApiOperation(value = "批量删除菜单")
-    @DeleteMapping("/")
+    @PostMapping("/batchDelete")
     public Result batchDeleteMenu(@RequestBody Long[] ids) {
         sysMenuService.removeBatchByIds(Arrays.asList(ids));
         return Result.success(null);
@@ -74,5 +76,14 @@ public class SysMenuController {
     public Result menuTree() {
         List<SysMenuVo> menuTree = sysMenuService.menuTree();
         return Result.success(menuTree);
+    }
+
+    @ApiOperation(value = "根据id获取")
+    @GetMapping("/{id}")
+    public Result getById(@PathVariable(value = "id") Long id) {
+        SysMenu SysMenu = sysMenuService.getById(id);
+        SysMenuVo SysMenuVo = new SysMenuVo();
+        BeanUtil.copyProperties(SysMenu, SysMenuVo);
+        return Result.success(SysMenuVo);
     }
 }

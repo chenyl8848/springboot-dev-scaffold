@@ -1,5 +1,7 @@
 package com.codechen.scaffold.generator.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codechen.scaffold.generator.domain.entity.FieldInfo;
 import com.codechen.scaffold.generator.domain.entity.TableInfo;
 
@@ -14,7 +16,10 @@ public interface IDataSourceService {
 
     public List<TableInfo> tableInfoList();
 
+    IPage<TableInfo> tableInfoPageList(Page<TableInfo> tableInfoPage, String tableName);
+
     public TableInfo tableInfo(String tableName);
 
     public List<FieldInfo> tableFieldList(String tableName);
+
 }
