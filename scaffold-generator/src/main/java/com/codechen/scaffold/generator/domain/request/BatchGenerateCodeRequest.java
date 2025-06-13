@@ -11,7 +11,7 @@ import java.util.List;
  * @date：2024-11-21 15:12
  * @description：批量代码生成请求
  */
-@ApiModel(description = "批量代码生成请求")
+@ApiModel(description = "批量代码生成请求实体")
 @Data
 public class BatchGenerateCodeRequest {
 

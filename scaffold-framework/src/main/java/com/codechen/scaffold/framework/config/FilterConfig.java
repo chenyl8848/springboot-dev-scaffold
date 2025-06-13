@@ -44,7 +44,7 @@ public class FilterConfig {
         filterRegistrationBean.setOrder(Integer.MIN_VALUE);
         filterRegistrationBean.addInitParameter(CommonConstant.EXCLUDE_URIS_KEY, authConfig.getExcludeUrls());
         filterRegistrationBean.addInitParameter(CommonConstant.TOKEN_SECRET, authConfig.getTokenSecret());
-        filterRegistrationBean.setOrder(Integer.MIN_VALUE);
+        filterRegistrationBean.setOrder(Integer.MIN_VALUE + 2);
         return filterRegistrationBean;
     }
 }
